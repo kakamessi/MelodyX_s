@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_video"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.angelmusic.student.activity.VideoActivity">
+
+    <SurfaceView
+        android:id="@+id/surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/black_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:text="@string/idle_text"
+        android:textColor="@color/white"
+        android:textSize="150sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_yuepu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/yuepu_group_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_yuepu1"
+            android:visibility="gone"
+            />
+
+        <include
+            layout="@layout/layout_yuepu2"
+            android:visibility="gone"
+            />
+
+        <include
+            layout="@layout/layout_yuepu3"
+            android:visibility="gone"
+            />
+
+        <include
+            layout="@layout/layout_yuepu4"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+</RelativeLayout>

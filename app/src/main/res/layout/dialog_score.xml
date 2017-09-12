@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/score_two"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:text="哇！获得了三颗星"
+        android:layout_marginTop="325dp"
+        android:textColor="#666666"
+        android:textSize="29sp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+
+    <TextView
+        android:text="继续加油哦~"
+        android:layout_marginTop="10dp"
+        android:textColor="#666666"
+        android:textSize="29sp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2" />
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/textView1"
+        >
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="音高"
+            android:textColor="#666666"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_yingao" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_yingao"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/score_bare_empty"
+            android:id="@+id/iv_yingao" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@+id/tv_yingao"
+            android:layout_marginLeft="19dp"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:src="@drawable/score_bar_full"
+            android:id="@+id/iv_yingao_full" />
+
+        <TextView
+            android:id="@+id/tv_yg_score"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_yingao"
+            android:layout_marginLeft="10dp"
+            android:text="90%"
+            android:textColor="#8ab708"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/rl1"
+        >
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="节奏"
+            android:textColor="#666666"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_jz" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_jz"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/score_bare_empty"
+            android:id="@+id/iv_jz" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@+id/tv_jz"
+            android:layout_marginLeft="19dp"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:src="@drawable/score_bar_full"
+            android:id="@+id/iv_jz_full" />
+
+        <TextView
+            android:id="@+id/tv_jz_score"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_jz"
+            android:layout_marginLeft="10dp"
+            android:text="90%"
+            android:textColor="#8ab708"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/rl2"
+        >
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:text="时值"
+            android:textColor="#666666"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_sz" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_sz"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/score_bare_empty"
+            android:id="@+id/iv_sz" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@+id/tv_sz"
+            android:layout_marginLeft="19dp"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:src="@drawable/score_bar_full"
+            android:id="@+id/iv_sz_full" />
+
+        <TextView
+            android:id="@+id/tv_sz_score"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_sz"
+            android:layout_marginLeft="10dp"
+            android:text="90%"
+            android:textColor="#8ab708"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

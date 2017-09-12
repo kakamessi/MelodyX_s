@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.angelmusic.student.activity.MainActivity"
+    >
+    <!--初始进入时的界面-->
+    <RelativeLayout
+        android:id="@+id/layout_main_01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/main_page_bg"/>
+
+        <ImageView
+            android:layout_marginTop="32dp"
+            android:id="@+id/iv_quku"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/ib_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/quku_logo"/>
+
+        <ImageButton
+            android:id="@+id/ib_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="32dp"
+            android:background="@mipmap/main_download"
+            android:onClick="onClick"/>
+
+        <TextView
+            android:id="@+id/tv_blackboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="255dp"
+            android:text="天使音乐"
+            android:textColor="@color/white"
+            android:textSize="58px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="45dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="WIFI名称："/>
+
+            <TextView
+                android:id="@+id/tv_wifi_name"
+                style="@style/textStyleWhite"
+                android:text="wifi_name"/>
+
+            <TextView
+                style="@style/textStyle"
+                android:text="教室名称："/>
+
+            <TextView
+                android:id="@+id/tv_classroom_name"
+                style="@style/textStyleWhite"
+                android:text="classroom_name"/>
+
+            <LinearLayout
+                android:id="@+id/seatId_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="座位号："/>
+
+                <TextView
+                    android:id="@+id/tv_seat_id"
+                    style="@style/textStyleWhite"
+                    android:text="seat_id"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/textStyle"
+                android:text="钢琴链接状态："/>
+
+            <TextView
+                android:id="@+id/tv_connection_status"
+                style="@style/textStyleWhite"
+                android:text="connection_status"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
