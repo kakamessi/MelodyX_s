@@ -100,7 +100,9 @@ public class UsbDeviceConnect {
 			// 成功获得设备接口
 			Log.i(TAG, "===Get DeviceInterface  Success:" + intf.getId()
 					+ "===");
-			if (intf.getId() == 1) {
+
+			//部分钢琴提供为id=0的设备接口
+			if (intf.getId() == 1 || intf.getId() == 0) {
 				usbInterface = intf;
 				return true;
 			}

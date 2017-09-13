@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity {
         seatId = SharedPreferencesUtil.getString("seatNo", "00");
         roomName = SharedPreferencesUtil.getString("roomName", "00");
         schoolName = SharedPreferencesUtil.getString("schoolName", "天使音乐");
-        pianoConStatus = "未链接";//钢琴是否连接
+        pianoConStatus = "未连接";//钢琴是否连接
     }
 
     private void initView() {
@@ -364,6 +364,8 @@ public class MainActivity extends BaseActivity {
                     if (updateListener != null) {
                         updateListener.onUpdate();
                     }
+
+                    tvConnectionStatus.setText(Html.fromHtml("<u>" + "已连接" + "</u>"));
                     break;
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
                     status = "usb-discrete";
@@ -374,6 +376,8 @@ public class MainActivity extends BaseActivity {
                         updateListener.onUpdate();
                     }
                     // clear();
+
+                    tvConnectionStatus.setText(Html.fromHtml("<u>" + "未连接" + "</u>"));
                     break;
                 case ACTION_USB_PERMISSION:
                     boolean isconnect = false;
@@ -417,6 +421,7 @@ public class MainActivity extends BaseActivity {
                 if(mBaseApp.getVideoHandler()!=null){
                     mBaseApp.getVideoHandler().sendMessage(msg);
                 }
+
             }
             @Override
             public void onSendCallback(boolean isSend) {
