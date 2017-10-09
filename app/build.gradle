@@ -43,4 +43,5 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
 
     compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.charonchui.vitamio:vitamio:4.2.2'
 }
