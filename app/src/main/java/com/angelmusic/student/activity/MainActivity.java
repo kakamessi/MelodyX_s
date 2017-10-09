@@ -1,20 +1,10 @@
 package com.angelmusic.student.activity;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -28,21 +18,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.angelmusic.stu.bean.UnityInterface;
 import com.angelmusic.stu.u3ddownload.utils.GsonUtil;
-import com.angelmusic.stu.usb.UsbDeviceConnect;
-import com.angelmusic.stu.usb.UsbDeviceInfo;
-import com.angelmusic.stu.usb.callback.CallbackInterface;
-import com.angelmusic.stu.utils.SendDataUtil;
 import com.angelmusic.student.R;
 import com.angelmusic.student.adpater.SeatAdapter;
-import com.angelmusic.student.base.App;
-import com.angelmusic.student.base.BaseActivity;
-import com.angelmusic.student.constant.Constant;
-import com.angelmusic.student.core.ActionType;
-import com.angelmusic.student.core.music.MusicNote;
+import com.angelmusic.student.base.BaseMidiActivity;
 import com.angelmusic.student.infobean.SeatDataInfo;
 import com.angelmusic.student.utils.NetworkUtil;
 import com.angelmusic.student.utils.SharedPreferencesUtil;
@@ -54,7 +34,7 @@ import butterknife.OnClick;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMidiActivity {
     @BindView(R.id.iv_bg)
     ImageView ivBg;
     @BindView(R.id.tv_wifi_name)
@@ -82,9 +62,6 @@ public class MainActivity extends BaseActivity {
     private SeatDataInfo seatDataInfo;
     private PopupWindow popupWindow;
 
-    private static String[] PERMISSION = {Manifest.permission.READ_PHONE_STATE};
-    protected static final String ACTION_USB_PERMISSION = "com.Aries.usbhosttest.USB_PERMISSION";
-
     private QuKuFragment qukuFragment  ;
 
     @Override
@@ -93,26 +70,20 @@ public class MainActivity extends BaseActivity {
         ApkManager.getInstance(this).checkVersionInfo();//检查版本更新
         initData();
         initView();
-        initPiano();
+        initMidi();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (islacksOfPermission(PERMISSION[0])) {
-            ActivityCompat.requestPermissions(this, PERMISSION, 0x12);
-        } else {
-
-        }
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MusicNote.setPianoAction(MainActivity.this,MusicNote.ACTION_UNMUTE);
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).colse();
+
     }
 
     @Override
@@ -144,28 +115,6 @@ public class MainActivity extends BaseActivity {
         tvConnectionStatus.setText(Html.fromHtml("<u>" + pianoConStatus + "</u>"));
     }
 
-    private void initPiano() {
-        final IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        filter.addAction(ACTION_USB_PERMISSION);
-        registerReceiver(mUsbReceiver, filter);
-
-//        updateDevice();
-//        connectDevice();
-        setPiano();
-    }
-
-    // 更新设备列表
-    public boolean updateDevice() {
-        return UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).update();
-    }
-
-    // 连接设备
-    public void connectDevice() {
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).connect();
-    }
-
     @OnClick({R.id.ib_download, R.id.tv_wifi_name, R.id.tv_classroom_name, R.id.seatId_ll, R.id.tv_connection_status, R.id.iv_quku})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -193,6 +142,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.tv_connection_status:
                 //预留
+
+
                 break;
             case R.id.iv_quku:
                 addFragment();
@@ -203,6 +154,44 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+
+
+    /**
+     * 接收消息
+     */
+    @Override
+    protected void handleMsg(Message msg) {
+
+
+    }
+
+
+
+    /*
+    *
+    * Fragment相关-------------------------------------------------------------------------
+    *
+    * */
+    public void addFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        qukuFragment = (QuKuFragment) fm.findFragmentById(R.id.layout_main_01);
+        if(qukuFragment == null )
+        {
+            qukuFragment = new QuKuFragment();
+            fm.beginTransaction().add(R.id.layout_main_01,qukuFragment).addToBackStack(null).commit();
+        }
+    }
+
+    public void popFragment() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.popBackStack();
+
+    }
+
+
+    //-----其他-----------------------------------------------------------------------------------------------------------------------------------
 
     /**
      * 显示所有座位号列表的弹框
@@ -277,198 +266,14 @@ public class MainActivity extends BaseActivity {
         popupWindow.showAtLocation(contentView, Gravity.CENTER, 0, 0);
     }
 
-    /**
-     * 接收教师端消息
-     */
-    @Override
-    protected void handleMsg(Message msg) {
-        super.handleMsg(msg);
-        String teacherMsg = msg.obj.toString();
-        String[] ac = teacherMsg.split("\\|");
 
-        if (!TextUtils.isEmpty(teacherMsg) && "2".equals(teacherMsg.substring(0, 1))) {
-            String json = teacherMsg.substring(2);
-            seatDataInfo = GsonUtil.jsonToObject(json, SeatDataInfo.class);
-            if (seatDataInfo != null) {
-                showSeatIdPopupWindow(seatDataInfo.getSeatNo());
-                //设置界面显示
-                tvSeatId.setText(seatDataInfo.getSeatNo());
-                tvClassroomName.setText(seatDataInfo.getRoomName());
-                tvBlackboard.setText(seatDataInfo.getSchoolName());
-                //存储信息
-                SharedPreferencesUtil.setString("seatInfoJson", json);
-                SharedPreferencesUtil.setString("seatNo", seatDataInfo.getSeatNo());
-                SharedPreferencesUtil.setString("roomName", seatDataInfo.getRoomName());
-                SharedPreferencesUtil.setString("schoolName", seatDataInfo.getSchoolName());
-                SharedPreferencesUtil.setString("schoolId", seatDataInfo.getSchoolID());//课程信息下载需要此参数
-            }
-        } else if (ActionType.ACTION_PREPARE.equals(ac[0])) {
-
-            //开始进行常规课
-            App.getApplication().getCd().setCourse_Id(ac[1]);
-
-            //整合视频资源
-            String[] names = ac[2].split("&");
-            String sdDir = Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH;
-            //String sdDir = this.getFilesDir().getAbsolutePath() + "/video/";
-
-            App.getApplication().getCd().getFiles().clear();
-            for (String name : names) {
-                App.getApplication().getCd().getFiles().put(name, sdDir + name);
-            }
-
-            startActivity(new Intent(this, VideoActivity.class));
-
-        } else if (ActionType.ACTION_LOGIN.equals(ac[0])) {
-
-            //登录操作
-            login(ac[1]);
-
-        } else if (ActionType.ACTION_GET_CLASS.equals(ac[0])) {
-
-            //保存班级id
-            //SharedPreferencesUtil.setString(Constant.CACHE_CLASS_ID, ac[1]);
-
-        }
-
-    }
-
-    /**
-     * 向教师端发送数据
-     */
-    @Override
-    protected void sendMsg(String str) {
-        super.sendMsg(str);
-
-    }
-
-    private UnityInterface.OnUpdateListener updateListener;
-
-    public void stopConnect() {
-        UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).stopConnect();
-    }
-
-    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
-
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            //Log.i(TAG, "BroadcastReceiver-->" + action);
-            String status = null;
-            switch (action) {
-                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
-                    status = "usb-insert";
-                    //Log.i(TAG, "检测到有USB插口接入-->" + action);
-                    Toast.makeText(context, "检测到有USB插口接入", Toast.LENGTH_SHORT).show();
-                    setPiano();
-                    // updateDeviceList();
-                    if (updateListener != null) {
-                        updateListener.onUpdate();
-                    }
-
-                    tvConnectionStatus.setText(Html.fromHtml("<u>" + "已连接" + "</u>"));
-                    break;
-                case UsbManager.ACTION_USB_DEVICE_DETACHED:
-                    status = "usb-discrete";
-                    //Log.i(TAG, "USB线被拔出-->" + action);
-                    Toast.makeText(context, "USB线被拔出", Toast.LENGTH_SHORT).show();
-                    UsbDeviceInfo.getUsbDeviceInfo(MainActivity.this).colse();
-                    if (updateListener != null) {
-                        updateListener.onUpdate();
-                    }
-                    // clear();
-
-                    tvConnectionStatus.setText(Html.fromHtml("<u>" + "未连接" + "</u>"));
-                    break;
-                case ACTION_USB_PERMISSION:
-                    boolean isconnect = false;
-                    // 判断用户点击的是取消还是确认
-                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED,
-                            false)) {
-                        //Log.i(TAG, "连接权限被允许-->" + action);
-                        Toast.makeText(context, "连接权限被允许", Toast.LENGTH_SHORT)
-                                .show();
-                        isconnect = UsbDeviceInfo.getUsbDeviceInfo(
-                                MainActivity.this).getUsbDeviceConnection();
-
-                        //Log.d(TAG, "连接-->" + isconnect);
-                    } else {
-                        stopConnect();
-                        //Log.i(TAG, "连接权限被取消-->" + action);
-                    }
-                    status = isconnect ? "link-success" : "link-fail";
-
-                    //连上钢琴 开启静音模式
-                    MusicNote.setPianoAction(MainActivity.this,MusicNote.ACTION_MUTE);
-
-                    break;
-            }
-            if (status != null) {
-                // 发送状态到unity
-                SendDataUtil.sendDataToUnity(UnityInterface.cameraName,
-                        UnityInterface.sendStatusAddress, status);
-            }
-        }
-    };
-
-    private void setPiano() {
-
-        UsbDeviceConnect.setCallbackInterface(new CallbackInterface() {
-            @Override
-            public void onReadCallback(String str) {
-                Message msg = Message.obtain();
-                msg.what = 1;
-                msg.obj = str;
-                if(mBaseApp.getVideoHandler()!=null){
-                    mBaseApp.getVideoHandler().sendMessage(msg);
-                }
-
-            }
-            @Override
-            public void onSendCallback(boolean isSend) {
-            }
-            @Override
-            public void onConnect(boolean isConnected) {
-                if(isConnected){
-                    MusicNote.setPianoAction(MainActivity.this,MusicNote.ACTION_MUTE);
-                }
-            }
-
-        });
-        updateDevice();
-        connectDevice();
-
-    }
-
-    private boolean islacksOfPermission(String permission) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return ContextCompat.checkSelfPermission(this, permission) ==
-                    PackageManager.PERMISSION_DENIED;
-        }
-        return false;
-    }
+    //-------其他---------------------------------------------------------------------------------------------------------------------------------
 
 
-    /*
-    *
-    * Fragment相关-------------------------------------------------------------------------
-    *
-    * */
-    public void addFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        qukuFragment = (QuKuFragment) fm.findFragmentById(R.id.layout_main_01);
-        if(qukuFragment == null )
-        {
-            qukuFragment = new QuKuFragment();
-            fm.beginTransaction().add(R.id.layout_main_01,qukuFragment).addToBackStack(null).commit();
-        }
-    }
 
-    public void popFragment() {
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.popBackStack();
 
-    }
+
 
 
 
