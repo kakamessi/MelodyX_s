@@ -38,8 +38,8 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     VideoView vv;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
-    @BindView(R.id.rl_piano)
-    RelativeLayout rlPiano;
+    @BindView(R.id.rl_loading)
+    RelativeLayout rl_loading;
     @BindView(R.id.activity_course)
     RelativeLayout activityCourse;
     @BindView(R.id.fl_one)
@@ -57,7 +57,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         initView();
         initVV();
         initMidi();
-        setUIType(R.id.rl_video);
+        setUIType(R.id.rl_loading);
 
     }
 
@@ -121,7 +121,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
     @Override
     protected void handleMsg(Message action) {
-
+        doAction((String) action.obj);
 
     }
 
@@ -135,7 +135,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         int c3 = Integer.parseInt(ab.getCodes()[2]);
 
         if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
-
+            if(c3==0){
+                VideoActivity.this.finish();
+            }
         } else if (c2 == ActionProtocol.CODE_ACTION_VEDIO) {
 
         } else if (c2 == ActionProtocol.CODE_ACTION_NOTE) {
@@ -181,13 +183,12 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         playOrPause();
     }
 
-    @OnClick({rl_video, R.id.rl_piano, R.id.activity_course})
+    @OnClick({rl_video,R.id.activity_course})
     public void onClick(View view) {
         switch (view.getId()) {
             case rl_video:
                 break;
-            case R.id.rl_piano:
-                break;
+
             case R.id.activity_course:
                 break;
         }

@@ -140,8 +140,7 @@ public class MainActivity extends BaseMidiActivity {
                 break;
             case R.id.tv_connection_status:
                 //预留
-                Intent intent=new Intent(MainActivity.this,VideoActivity.class);
-                startActivity(intent);
+
 
                 break;
             case R.id.iv_quku:
