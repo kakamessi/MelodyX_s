@@ -1,8 +1,6 @@
 package com.angelmusic.stu.server.socket.udp;
 
 import com.angelmusic.stu.server.socket.constant.NetParams;
-import com.angelmusic.stu.u3dInterface.U3dType;
-import com.unity3d.player.UnityPlayer;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -22,7 +20,6 @@ public class UdpServerClient {
 
     public void testUdp(){
 
-        UnityPlayer.UnitySendMessage(U3dType.TYPE_Communication,U3dType.METHOD_ON_MSG, "1|aewf45g45@192.168.1.25");
 
     }
 

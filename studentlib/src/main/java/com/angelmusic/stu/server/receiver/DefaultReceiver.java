@@ -2,8 +2,6 @@ package com.angelmusic.stu.server.receiver;
 
 import com.angelmusic.stu.server.socket.constant.Constant;
 import com.angelmusic.stu.server.socket.constant.NetParams;
-import com.angelmusic.stu.u3dInterface.U3dType;
-import com.unity3d.player.UnityPlayer;
 
 /**
  * Created by DELL on 2016/10/24.
@@ -29,7 +27,6 @@ public class DefaultReceiver extends Receiver {
             if(innerAction(sourceStrArray[i])){
                 continue;
             }
-            UnityPlayer.UnitySendMessage(U3dType.TYPE_Communication,U3dType.METHOD_ON_MSG, sourceStrArray[i]);
 
         }
 

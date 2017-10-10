@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    protected String TAG = "BaseActivity";
+    protected String TAG = this.getClass().getName();
     private final String APATCH_NAME = "myfix.apatch"; // 补丁文件名
     private ViewGroup mViewGroup;
     private View loadingView;//加载圈圈的布局
@@ -71,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int setContentViewId();
 
     //****设置页面标签
-    protected abstract void setTAG();
+    protected void setTAG(){}
 
     //****处理通信命令
     protected void handleMsg(Message msg) {

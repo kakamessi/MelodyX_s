@@ -3,7 +3,6 @@ package com.angelmusic.stu.usb.data;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 
-import com.angelmusic.stu.bean.UnityInterface;
 import com.angelmusic.stu.usb.callback.CallbackInterface;
 import com.angelmusic.stu.utils.Log;
 import com.angelmusic.stu.utils.SendDataUtil;
@@ -74,8 +73,7 @@ public class ReadUsbDataThread extends Thread {
 				if (callbackInterface != null) {
 					callbackInterface.onReadCallback(buffer2.toString());
 				}
-				SendDataUtil.sendDataToUnity(UnityInterface.cameraName,
-						UnityInterface.sndDataAddress, buffer2.toString());
+
 			}
 		} catch (Exception e) {
 			Log.i(TAG, "===Exception!===" + e.toString());

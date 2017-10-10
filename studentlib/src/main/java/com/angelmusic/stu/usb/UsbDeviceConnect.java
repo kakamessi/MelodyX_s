@@ -11,12 +11,10 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 
-import com.angelmusic.stu.bean.UnityInterface;
 import com.angelmusic.stu.usb.callback.CallbackInterface;
 import com.angelmusic.stu.usb.data.ReadUsbDataThread;
 import com.angelmusic.stu.usb.data.SendUsbDataThread;
 import com.angelmusic.stu.utils.Log;
-import com.angelmusic.stu.utils.SendDataUtil;
 
 /**
  * @author huzhikun
@@ -161,9 +159,7 @@ public class UsbDeviceConnect {
 				callbackInterface.onConnect(isconnect);
 
 				// 发送状态到unity
-				SendDataUtil.sendDataToUnity(UnityInterface.cameraName,
-						UnityInterface.sendStatusAddress,
-						isconnect ? "link-success" : "link-fail");
+
 			}
 		} else {
 

@@ -23,6 +23,9 @@ import com.angelmusic.stu.u3ddownload.utils.GsonUtil;
 import com.angelmusic.student.R;
 import com.angelmusic.student.adpater.SeatAdapter;
 import com.angelmusic.student.base.BaseMidiActivity;
+import com.angelmusic.student.core.ActionBean;
+import com.angelmusic.student.core.ActionProtocol;
+import com.angelmusic.student.core.ActionResolver;
 import com.angelmusic.student.infobean.SeatDataInfo;
 import com.angelmusic.student.utils.NetworkUtil;
 import com.angelmusic.student.utils.SharedPreferencesUtil;
@@ -87,11 +90,6 @@ public class MainActivity extends BaseMidiActivity {
     }
 
     @Override
-    protected void setTAG() {
-        TAG = "MainActivity";
-    }
-
-    @Override
     protected int setContentViewId() {
         return R.layout.activity_main;
     }
@@ -142,7 +140,8 @@ public class MainActivity extends BaseMidiActivity {
                 break;
             case R.id.tv_connection_status:
                 //预留
-
+                Intent intent=new Intent(MainActivity.this,VideoActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.iv_quku:
@@ -162,11 +161,23 @@ public class MainActivity extends BaseMidiActivity {
      */
     @Override
     protected void handleMsg(Message msg) {
-
-
+        doAction((String) msg.obj);
     }
 
+    private ActionBean ab;
+    private void doAction(String str) {
+        ab = ActionResolver.getInstance().resolve(str);
 
+        int c2 = Integer.parseInt(ab.getCodes()[1]);
+        int c3 = Integer.parseInt(ab.getCodes()[2]);
+
+        if(c2== ActionProtocol.CODE_ACTION_COURSE){
+            if(c3==1){
+                Intent intent=new Intent(MainActivity.this,VideoActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
 
     /*
     *

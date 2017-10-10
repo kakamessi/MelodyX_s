@@ -1,4 +1,4 @@
-package com.angelmusic.student.infobean;
+package com.angelmusic.student.core;
 
 /**
  * Created by DELL on 2017/5/17.

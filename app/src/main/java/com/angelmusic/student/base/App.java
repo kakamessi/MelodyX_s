@@ -19,7 +19,6 @@ import com.angelmusic.stu.u3ddownload.okhttp.cookie.PersistentCookieJar;
 import com.angelmusic.stu.u3ddownload.okhttp.cookie.cache.SetCookieCache;
 import com.angelmusic.stu.u3ddownload.okhttp.cookie.persistence.SharedPrefsCookiePersistor;
 import com.angelmusic.stu.utils.MyCrashHandler;
-import com.angelmusic.student.activity.MainActivity;
 import com.angelmusic.student.constant.Constant;
 import com.angelmusic.student.core.ActionDispatcher;
 import com.angelmusic.student.core.ActionType;
@@ -32,8 +31,6 @@ import com.angelmusic.student.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -74,7 +71,7 @@ public class App extends Application {
         super.onCreate();
 
         myApplication = this;
-        initCrash();
+        //initCrash();
         initService();
         LogUtil.isDebug = true;//设置是否打印Log日志
         initOkHttp();//初始化网络框架
