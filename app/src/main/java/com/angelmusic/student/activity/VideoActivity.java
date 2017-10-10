@@ -48,7 +48,6 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
     //当前消息
     private String actionMsg;
-    private ActionBean ab;
 
 
     @Override
@@ -128,6 +127,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     /**
      * 处理消息逻辑 如下课，切换视频等逻辑
      */
+    private ActionBean ab;
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
 
@@ -139,6 +139,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 VideoActivity.this.finish();
             }
         } else if (c2 == ActionProtocol.CODE_ACTION_VEDIO) {
+
+            playOrPause();
+            setUIType(R.id.rl_video);
 
         } else if (c2 == ActionProtocol.CODE_ACTION_NOTE) {
 
