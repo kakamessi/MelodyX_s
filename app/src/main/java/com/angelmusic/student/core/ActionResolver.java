@@ -1,6 +1,5 @@
 package com.angelmusic.student.core;
 
-
 /**
  *
  * Created by wangshuai on 2017/9/26.
@@ -11,7 +10,7 @@ package com.angelmusic.student.core;
 public class ActionResolver {
 
     private static ActionResolver instance;
-    private ActionResolver(){}
+    private ActionResolver (){}
     public static synchronized ActionResolver getInstance() {
         if (instance == null) {
             instance = new ActionResolver();

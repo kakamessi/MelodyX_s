@@ -3,16 +3,13 @@ package com.angelmusic.student.core;
 import android.os.Handler;
 import android.os.Message;
 
-import com.angelmusic.student.base.App;
-import com.angelmusic.student.interfaces.IActionDispatcher;
-
 import java.util.HashMap;
 
 /**
- * Created by DELL on 2016/12/6.
+ * Created by wangshuai on 2017/9/26.
  */
 
-public class ActionDispatcher implements IActionDispatcher {
+public class ActionDispatcher {
 
     private HashMap<String,Handler> mapHandler = new HashMap<>();
 
@@ -25,22 +22,7 @@ public class ActionDispatcher implements IActionDispatcher {
         return instance;
     }
 
-
-    @Override
     public void dispatch(String actionType) {
-
-        String[] str = actionType.split("\\|");
-        String action = str[0];
-
-        //消息拦截
-        if(ActionType.ACTION_MUTE.equals(action)){
-
-            Handler mh = mapHandler.get(App.TAG);
-            if(mh!=null) {
-                sendHandlerMsg(mh, actionType);
-            }
-            return;
-        }
 
         for (Handler value : mapHandler.values()) {
             sendHandlerMsg(value,actionType);
@@ -48,26 +30,28 @@ public class ActionDispatcher implements IActionDispatcher {
 
     }
 
-    private void sendHandlerMsg(Handler hander,String str){
+    /**
+     *
+     * 消息发送管理器
+     * @param hander
+     * @param str
+     */
+    private void sendHandlerMsg(Handler hander, String str){
         Message msg = Message.obtain();
         msg.obj = str;
         hander.sendMessage(msg);
     }
 
-    @Override
     public void register(String tag, Handler handler) {
 
         mapHandler.put(tag,handler);
     }
 
-    @Override
     public void remove(String tag) {
 
         mapHandler.remove(tag);
     }
 
-
-    @Override
     public void reset() {
 
         mapHandler.clear();
@@ -77,6 +61,3 @@ public class ActionDispatcher implements IActionDispatcher {
 
 
 }
-
-
-

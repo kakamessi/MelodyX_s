@@ -53,11 +53,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
         initVV();
         initMidi();
         setUIType(R.id.rl_loading);
-
     }
 
     @Override
@@ -68,18 +66,11 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
     }
 
     @Override
     protected int setContentViewId() {
         return R.layout.activity_course;
-    }
-
-    private void initView() {
-
-
     }
 
     /**
@@ -96,6 +87,17 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
         //vv.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
         vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
+    }
+
+    @OnClick({rl_video,R.id.activity_course})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case rl_video:
+                break;
+
+            case R.id.activity_course:
+                break;
+        }
     }
 
     /**
@@ -184,17 +186,6 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     @Override
     public void onPrepared(MediaPlayer mp) {
         playOrPause();
-    }
-
-    @OnClick({rl_video,R.id.activity_course})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case rl_video:
-                break;
-
-            case R.id.activity_course:
-                break;
-        }
     }
 
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
