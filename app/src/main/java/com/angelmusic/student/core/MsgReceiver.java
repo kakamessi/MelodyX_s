@@ -11,7 +11,7 @@ import com.angelmusic.student.interfaces.IActionDispatcher;
 
 public class MsgReceiver extends AbsReceiver {
 
-    private IActionDispatcher ad;
+    private ActionDispatcher ad;
 
     public MsgReceiver(){
         ad = ActionDispatcher.getInstance();

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.angelmusic.student.R;
 import com.angelmusic.student.base.BaseActivity;
+import com.angelmusic.student.constant.Constant;
+import com.angelmusic.student.utils.SharedPreferencesUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,7 +17,11 @@ public class WelcomeActivity extends BaseActivity {
         // 计时时间结束后跳转页面
         @Override
         public void run() {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            if(SharedPreferencesUtil.hasKey(Constant.CACHE_LOGIN_ID)){
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }else{
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
             finish();// 不再退回本界面
         }
     };
@@ -29,6 +35,8 @@ public class WelcomeActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         timer.schedule(task, 1 * 1000);// 设置计时器时间
+
+
     }
 
     @Override

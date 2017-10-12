@@ -14,12 +14,60 @@ public class Constant {
     public static final int UDP_PORT = 8000;
     public static final int TEACHER_UDP_PORT = 8001;
 
+
+    /***
+     * --------持久化参数------------------------------------------------------------------------------------------------------------
+     */
     //学校id
     public static final String CACHE_SCHOOL_ID = "CACHE_SCHOOL_ID";
     //班级id
     public static final String CACHE_CLASS_ID = "CACHE_CLASS_ID";
     //学生id
     public static final String CACHE_STUDENT_ID = "CACHE_STUDENT_ID";
+    //登录账户
+    public static final String CACHE_LOGIN_ID = "CACHE_LOGIN_ID";
+    //登录密码
+    public static final String CACHE_LOGIN_PSW = "CACHE_LOGIN_PSW";
+
+
+    /***
+     * --------网络参数------------------------------------------------------------------------------------------------------------
+     */
+
+    public static final String URL_ROOT = "http://10.0.0.4:8080/";
+    public static final String URL_STU_LOGIN = "client/stuLogin.json";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //跟灯类型
     public static final String RHYTHM_DEMONSTRATE = "5";           //节奏连连看 示范奏
