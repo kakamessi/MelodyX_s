@@ -273,7 +273,6 @@ public class MainActivity extends BaseMidiActivity {
 
     //-------其他---------------------------------------------------------------------------------------------------------------------------------
 
-
     @Override
     public void onMidiInputDeviceAttached(@NonNull MidiInputDevice midiInputDevice) {
         super.onMidiInputDeviceAttached(midiInputDevice);
@@ -285,6 +284,7 @@ public class MainActivity extends BaseMidiActivity {
     public void onMidiInputDeviceDetached(@NonNull MidiInputDevice midiInputDevice) {
         super.onMidiInputDeviceDetached(midiInputDevice);
         tvConnectionStatus.setText("未连接");
-        
+
     }
+
 }
