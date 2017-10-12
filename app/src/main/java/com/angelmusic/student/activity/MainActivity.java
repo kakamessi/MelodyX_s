@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +33,7 @@ import com.angelmusic.student.version_update.ApkManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.kshoji.driver.midi.device.MidiInputDevice;
 
 /**
  * 主页
@@ -130,17 +131,10 @@ public class MainActivity extends BaseMidiActivity {
                 //预留
                 break;
             case R.id.seatId_ll:
-                if (!TextUtils.isEmpty(tvSeatId.getText())) {
-                    tvSeatId.setClickable(false);
-                    showSeatPopup(view);
-                } else {
-                    //向教师端请求数据
 
-                }
                 break;
             case R.id.tv_connection_status:
                 //预留
-
 
                 break;
             case R.id.iv_quku:
@@ -280,11 +274,17 @@ public class MainActivity extends BaseMidiActivity {
     //-------其他---------------------------------------------------------------------------------------------------------------------------------
 
 
+    @Override
+    public void onMidiInputDeviceAttached(@NonNull MidiInputDevice midiInputDevice) {
+        super.onMidiInputDeviceAttached(midiInputDevice);
+        tvConnectionStatus.setText("已连接");
 
+    }
 
-
-
-
-
-
+    @Override
+    public void onMidiInputDeviceDetached(@NonNull MidiInputDevice midiInputDevice) {
+        super.onMidiInputDeviceDetached(midiInputDevice);
+        tvConnectionStatus.setText("未连接");
+        
+    }
 }

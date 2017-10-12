@@ -68,15 +68,18 @@
 
             <TextView
                 style="@style/textStyle"
+                android:visibility="gone"
                 android:text="教室名称："/>
 
             <TextView
                 android:id="@+id/tv_classroom_name"
+                android:visibility="gone"
                 style="@style/textStyleWhite"
                 android:text="classroom_name"/>
 
             <LinearLayout
                 android:id="@+id/seatId_ll"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClick">
