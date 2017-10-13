@@ -25,11 +25,24 @@ import io.vov.vitamio.widget.VideoView;
 import static com.angelmusic.student.R.id.rl_video;
 
 /**
- * 本界面初始化只是一个单纯的准备中界面，其界面样式完全由教师端发消息来控制
- * <p>
- * 界面样式由setLayoutStyle来控制，
- * <p>
- * 主要有钢琴通讯处理，和教师端通信处理
+ *
+ *  1- 钢琴发音
+ *  2- 钢琴亮灯
+ *  3- 钢琴静音
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
