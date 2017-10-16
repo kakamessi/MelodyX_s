@@ -61,6 +61,10 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
     //当前消息
     private String actionMsg;
+    public static int COURSE_TYPE = -1;
+    public static final int TYPE_VEDIO = 1;
+    public static final int TYPE_PLAY = 2;
+    public static final int TYPE_MUSIC = 3;
 
 
     @Override
@@ -145,22 +149,45 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     private ActionBean ab;
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
-
-        int c2 = Integer.parseInt(ab.getCodes()[1]);
-        int c3 = Integer.parseInt(ab.getCodes()[2]);
-
-        if (c2 == ActionProtocol.CODE_ACTION_COURSE) {
-            if(c3==0){
+        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
+            if (ab.getCodeByPositon(2) == 0) {
                 VideoActivity.this.finish();
             }
-        } else if (c2 == ActionProtocol.CODE_ACTION_VEDIO) {
-
-            playOrPause();
-            setUIType(R.id.rl_video);
-
-        } else if (c2 == ActionProtocol.CODE_ACTION_NOTE) {
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
+            initVedioSection();
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
 
         }
+    }
+
+
+    /***
+     * 播放视频
+     */
+    public void initVedioSection() {
+        COURSE_TYPE = TYPE_VEDIO;
+        setUIType(R.id.rl_video);
+        if(ActionProtocol.CODE_VEDIO_ON==ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF==ab.getCodeByPositon(2) ){
+            playOrPause();
+        }else if(ActionProtocol.CODE_VEDIO_CHANGE==ab.getCodeByPositon(2)){
+            swichPlayScr(ab.getStringByPositon(3));
+        }
+    }
+
+    /**
+     * 准备曲谱， 判断钢琴输入对错
+     */
+    public void initPlaySection() {
+        COURSE_TYPE = TYPE_PLAY;
+
+    }
+
+    /**
+     * 增加伴奏音乐
+     */
+    public void initMusicSection() {
+        COURSE_TYPE = TYPE_MUSIC;
+
     }
 
 
@@ -170,7 +197,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
      * 切换资源
      */
     private void swichPlayScr(String name) {
-        vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
+        vv.setVideoURI(Uri.parse(Utils.getVideoPath() + name));
         vv.start();
     }
 

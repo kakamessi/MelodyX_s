@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.angelmusic.student.activity.VideoActivity">
 
+
     <FrameLayout
         android:id="@+id/fl_one"
         android:layout_width="match_parent"
@@ -31,13 +32,16 @@
             android:layout_height="match_parent">
             <TextView
                 android:text="加载中..."
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="120sp" />
         </RelativeLayout>
 
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_score" />
+
     </FrameLayout>
+
 
 
 </RelativeLayout>
