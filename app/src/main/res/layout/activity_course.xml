@@ -32,7 +32,7 @@
             android:layout_height="match_parent">
             <TextView
                 android:text="加载中..."
-                android:textColor="#FFFFFF"
+                android:textColor="#6eccba"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="120sp" />
