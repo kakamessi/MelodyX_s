@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.angelmusic.stu.utils.Log;
 import com.angelmusic.student.R;
 import com.angelmusic.student.base.BaseMidiActivity;
 import com.angelmusic.student.core.ActionBean;
@@ -31,6 +32,10 @@ import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 import static com.angelmusic.student.R.id.rl_video;
+import static com.angelmusic.student.core.MelodyU.d_color_1;
+import static com.angelmusic.student.core.MelodyU.d_duringtime_1;
+import static com.angelmusic.student.core.MelodyU.d_note_1;
+import static com.angelmusic.student.core.MelodyU.d_starttime_1;
 
 /**
  * 1- 钢琴发音
@@ -50,12 +55,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     RelativeLayout activityCourse;
     @BindView(R.id.fl_one)
     FrameLayout fl_root;
-    @BindView(R.id.rl_top)
-    RelativeLayout rlTop;
-    @BindView(R.id.rl_bottom)
-    RelativeLayout rlBottom;
-    @BindView(R.id.include_score)
-    LinearLayout includeScore;
+    @BindView(R.id.rl_score)
+    RelativeLayout rlScore;
+
 
     private MidiOutputDevice mOutputDevice;
 
@@ -87,6 +89,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     protected void onDestroy() {
         super.onDestroy();
         vv.stopPlayback();
+        stopTempleLight();
     }
 
     @Override
@@ -140,130 +143,6 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         }
     }
 
-    //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
-
-
-    /**
-     * 消息入口
-     *
-     * @param action
-     */
-    @Override
-    protected void handleMsg(Message action) {
-        doAction((String) action.obj);
-    }
-
-    /**
-     * 处理消息逻辑 如下课，切换视频等逻辑
-     */
-    private ActionBean ab;
-
-    private void doAction(String str) {
-        ab = ActionResolver.getInstance().resolve(str);
-        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
-            if (ab.getCodeByPositon(2) == 0) {
-                VideoActivity.this.finish();
-            }
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
-            initVedioSection();
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            initPlaySection();
-        }
-    }
-
-    /***
-     * 播放视频
-     */
-    public void initVedioSection() {
-        COURSE_TYPE = TYPE_VEDIO;
-        setUIType(R.id.rl_video);
-        if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
-            playOrPause();
-        } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
-            swichPlayScr(ab.getStringByPositon(3));
-        }
-    }
-
-    /**
-     * 准备曲谱， 判断钢琴输入对错
-     */
-    public void initPlaySection() {
-        COURSE_TYPE = TYPE_PLAY;
-        setUIType(R.id.include_score);
-        replaceLayout(rlTop, R.layout.view_score_top);
-        replaceLayout(rlBottom, R.layout.view_score_bottom);
-
-    }
-
-    /**
-     * 增加伴奏音乐
-     */
-    public void initMusicSection() {
-        COURSE_TYPE = TYPE_MUSIC;
-
-    }
-
-    /**
-     * 根据课程动态选择 布局文件
-     *
-     * @param fu
-     * @param zi
-     */
-    private void replaceLayout(ViewGroup fu, int resId) {
-
-        fu.removeAllViews();
-        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
-
-    }
-
-    int currentPlayIndex = 0;
-
-    private void checkInput(int note) {
-        Toast.makeText(this, note + "", 0).show();
-        NoteInfo nextInfo = null;
-        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, -1)) != null) {
-            //输入正确，进行下一个音符的UI显示
-            MelodyU.getInstance().setNoteAndKey(this, includeScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-            //亮灯显示
-            doLight(nextInfo);
-
-            currentPlayIndex++;
-        }
-    }
-
-    private void doLight(NoteInfo nextInfo) {
-        for (int i = 21; i < 109; i++) {
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
-        }
-        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
-    }
-
-
-    //note 21 -108 序号  钢琴按键排序从1开始
-    @Override
-    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
-        super.onMidiNoteOff(sender, cable, channel, note, velocity);
-        if (COURSE_TYPE == TYPE_PLAY) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    checkInput(note - 21);
-                }
-            });
-
-        }
-    }
-
-    @Override
-    public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
-        super.onMidiOutputDeviceAttached(midiOutputDevice);
-        mOutputDevice = getMidiOutputDevice();
-    }
-
-    //------------公共课程逻辑end----------------------------------------------------------------------------------------------------------------
-
-
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
 
     /**
@@ -302,6 +181,236 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     }
 
     //-----------------------------------------------------------视频相关-----------------------------------------------------------------
+
+
+    //------------公共课程逻辑start----------------------------------------------------------------------------------------------------------------
+
+    private int currentPlayIndex = 0;
+
+    /**
+     * 消息入口
+     *
+     * @param action
+     */
+    @Override
+    protected void handleMsg(Message action) {
+        doAction((String) action.obj);
+    }
+
+    /**
+     * 处理消息逻辑 如下课，切换视频等逻辑
+     */
+    private ActionBean ab;
+
+    private void doAction(String str) {
+
+        resetStatus();
+
+        Log.e("kaka","----------action code------- " + str);
+        ab = ActionResolver.getInstance().resolve(str);
+        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
+            if (ab.getCodeByPositon(2) == 0) {
+                VideoActivity.this.finish();
+            }
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
+            initVedioSection();
+
+        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            stopVideo();
+            initPlaySection();
+        }
+    }
+
+    private void resetStatus(){
+        MelodyU.getInstance().offAllLight(mOutputDevice);
+        stopTempleLight();
+    }
+
+    private void stopVideo() {
+        vv.stopPlayback();
+    }
+
+    /***
+     * 播放视频
+     */
+    public void initVedioSection() {
+        COURSE_TYPE = TYPE_VEDIO;
+        setUIType(R.id.rl_video);
+        if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
+            playOrPause();
+        } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
+            swichPlayScr(ab.getStringByPositon(3));
+            //是否亮灯
+            if(1==ab.getCodeByPositon(4)){
+                startTemple();
+            }
+        }
+    }
+
+    /**
+     * 准备曲谱， 判断钢琴输入对错
+     */
+    public void initPlaySection() {
+        COURSE_TYPE = TYPE_PLAY;
+        currentPlayIndex = 0;
+        setUIType(R.id.rl_score);
+
+        //定位资源
+        showTopLayout((currentPlayIndex + 1) + "");
+
+    }
+
+    private void showTopLayout(String tag) {
+        //遍历viewgroup
+        LinearLayout vg = null;
+        int[] ls = MelodyU.getInstance().getPlayLayouts(-1);
+        for (int i = 0; i < ls.length; i++) {
+            vg = (LinearLayout) getLayoutInflater().inflate(ls[i], null);
+            ViewGroup vgTop = (ViewGroup) vg.findViewById(R.id.rl_top);
+            for (int n = 0; n < vgTop.getChildCount(); n++) {
+                if (tag.equals((String) vgTop.getChildAt(n).getTag())) {
+                    replaceLayout(rlScore,ls[i]);
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * 增加伴奏音乐
+     */
+    public void initMusicSection() {
+        COURSE_TYPE = TYPE_MUSIC;
+
+    }
+
+    /**
+     * 根据课程动态选择 布局文件
+     *
+     * @param fu
+     * @param zi
+     */
+    private void replaceLayout(ViewGroup fu, int resId) {
+
+        fu.removeAllViews();
+        ViewGroup vg = (ViewGroup) LayoutInflater.from(this).inflate(resId, fu);
+
+    }
+
+    private void checkInput(int note) {
+        NoteInfo nextInfo = null;
+        //判断对错
+        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, -1)) != null) {
+
+            if (currentPlayIndex == (MelodyU.course_1.size() - 1)) {
+                currentPlayIndex = 0;
+            } else {
+                currentPlayIndex++;
+            }
+
+            //处理多页面
+            showTopLayout((currentPlayIndex + 1) + "");
+            //下一个音符的UI显示
+            MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+            //亮灯显示
+            doLight(nextInfo);
+
+        }
+    }
+
+    private void doLight(NoteInfo nextInfo) {
+        for (int i = 21; i < 109; i++) {
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
+        }
+        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
+    }
+
+
+    //note 21 -108 序号  钢琴按键排序从1开始
+    @Override
+    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
+        super.onMidiNoteOff(sender, cable, channel, note, velocity);
+        if (COURSE_TYPE == TYPE_PLAY) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    checkInput(note - 21);
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onMidiOutputDeviceAttached(@NonNull MidiOutputDevice midiOutputDevice) {
+        super.onMidiOutputDeviceAttached(midiOutputDevice);
+        mOutputDevice = getMidiOutputDevice();
+    }
+
+    private TempleThread tt;
+
+    private void stopTempleLight() {
+        if (tt != null) {
+            tt.interrupt();
+            tt = null;
+        }
+    }
+
+    private void startTemple(){
+        if(mOutputDevice==null){
+            return;
+        }
+        if(tt!=null){
+            tt.interrupt();
+            tt = null;
+        }
+        tt = new TempleThread(mOutputDevice, d_starttime_1, d_duringtime_1, d_color_1, d_note_1);
+        tt.start();
+    }
+
+    /* 跟灯 */
+    class TempleThread extends Thread {
+        MidiOutputDevice md;
+        long[] delay = null; //时间延迟执行
+        long[] dur = null;   //亮灯时间
+        int[] color = null;
+        int[] index = null;   //亮灯位置
+
+        public TempleThread(MidiOutputDevice mod, long[] mDelays, long[] mdur, int[] mcolor, int[] mindex) {
+            md = mod;
+            delay = mDelays;
+            dur = mdur;
+            color = mcolor;
+            index = mindex;
+        }
+
+        @Override
+        public void run() {
+            int xunhuan = 0;
+            try {
+                while (true) {
+                    if (xunhuan > delay.length - 1) {
+                        if (tt != null) {
+                            tt = null;
+                        }
+                        return;
+                    }
+                    if (vv != null) {
+                        int curTime = (int) vv.getCurrentPosition();
+                        if ( curTime > delay[xunhuan] ) {
+                            MelodyU.getInstance().lightTempo(md, dur, color, index);
+                            xunhuan++;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+
+    //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
 
 
 }

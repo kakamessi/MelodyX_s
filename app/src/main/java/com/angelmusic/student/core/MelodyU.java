@@ -9,9 +9,12 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.angelmusic.student.R;
 
 import java.util.ArrayList;
+
+import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 /**
  * Created by wangshuai on 2017/10/18.
@@ -21,43 +24,54 @@ public class MelodyU {
 
     //-----数据段start---------------------------------------------------------------------------------------------
 
-    public static int[] note_1 = {38, 39, 41, 43, 44, 46, 48, 50};
-    public static int[] color_1 = { 1, 1, 1, 1, 1, 1, 1, 1};
+    public static long[] d_starttime_1 = {5000};
 
+    public static long[] d_duringtime_1 = {2000,2000,2000,2000,2000,2000,2000,2000,
+            2000,2000,2000,2000,2000*4,2000,2000,2000,2000,
+            2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
 
+    public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
+                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+    public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
+                                   1, 1, 1, 1, 1, 1, 1, 1,1,
+                                   1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
     public static ArrayList<NoteInfo> course_2 = new ArrayList<>();
 
     static {
-        course_1.addAll(setNoteList(note_1,color_1));
+        course_1.addAll(setNoteList(d_note_1, d_color_1));
     }
 
     //-----数据段end---------------------------------------------------------------------------------------------
 
+    private MidiOutputDevice mOutputDevice;
+
     /**
      * playIndex      从0开始
-     * @param note   音符号
-     * @param resId  资源id
-     * @return       返回下一个音符信息
+     *
+     * @param note  音符号
+     * @param resId 资源id
+     * @return 返回下一个音符信息
      */
-    public static NoteInfo checkInputX(int note,int playIndex,int resId){
+    public static NoteInfo checkInputX(int note, int playIndex, int resId) {
         NoteInfo result = null;
 
-        if(resId==-1){
+        if (resId == -1) {
 
-            playIndex = playIndex%course_1.size();
+            playIndex = playIndex % course_1.size();
 
             //判断正误
-            if(note != course_1.get(playIndex).getNote()){
+            if (note != course_1.get(playIndex).getNote()) {
                 return null;
             }
 
             //返回下一个
-            if(playIndex==(course_1.size()-1)){
+            if (playIndex == (course_1.size() - 1)) {
                 playIndex = 0;
-            }else{
+            } else {
                 playIndex++;
             }
             result = course_1.get(playIndex);
@@ -66,37 +80,45 @@ public class MelodyU {
     }
 
     /**
+     * 根据课程id找资源
+     * @param id
+     * @return
+     */
+    public ArrayList<NoteInfo> getCourseById(int id){
+        ArrayList<NoteInfo> list = null;
+        switch(id) {
+            case 1:
+                list = course_1;
+                break;
+            case 2:
+                break;
+        }
+        return list;
+    }
+
+    /**
      *      动态操作UI元素
      *
-     *      根据跟奏[数据] 设置对应的音符，琴键界面变化
-     *      音符位置，音符颜色
-     *
-     *      音符Tag从左至右升序排列 0 - 10  上下都有的序号相同
-     *
-     *
-     *      音符蓝色背景 R.mipmap.kc_blue_puzi_bg 无背景 0
-     *
-     *  ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, 0xFFFB5555));
-     ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, 0xFF34B4FF));
-     ((ImageView) whiteKeyLl2.getChildAt(i - 1)).setImageDrawable(getTintPic(this, R.mipmap.kc_white_key, Color.WHITE));
-     *
+     *      音符部分： 找到对应TAG,进行相关操作
+     *      琴键部分：
      *
      */
     private ArrayList<ImageView> noteList = null;
-    public void setNoteAndKey(Context context, ViewGroup vg, int noteIndex, boolean isNoteRed, int keyIndex, boolean isKeyRed){
+
+    public void setNoteAndKey(Context context, ViewGroup vg, int noteIndex, boolean isNoteRed, int keyIndex, boolean isKeyRed) {
 
         getNotes(vg);
 
         //设置对应音符位置的颜色
-        for(ImageView iv : noteList){
+        for (ImageView iv : noteList) {
             String index = (String) iv.getTag();
-            if(index.equals(noteIndex + "")) {
-                if(isNoteRed){
+            if (index.equals(noteIndex + "")) {
+                if (isNoteRed) {
                     iv.setBackgroundResource(R.mipmap.kc_red_puzi_bg);
-                }else{
+                } else {
                     iv.setBackgroundResource(R.mipmap.kc_blue_puzi_bg);
                 }
-            }else{
+            } else {
                 iv.setBackgroundResource(0);
             }
 
@@ -104,72 +126,152 @@ public class MelodyU {
 
         //改变琴键的颜色
         LinearLayout gg = (LinearLayout) vg.findViewById(R.id.white_keys);
-        for(int i=0;i<gg.getChildCount(); i++){
+        for (int i = 0; i < gg.getChildCount(); i++) {
             ImageView iv = (ImageView) gg.getChildAt(i);
-            if(keyIndex - 1 == i){
-                if(isKeyRed){
+            if (keyIndex - 1 == i) {
+                if (isKeyRed) {
                     iv.setImageDrawable(getTintPic(context, R.mipmap.kc_white_key, 0xFFFB5555));
-                }else{
+                } else {
                     iv.setImageDrawable(getTintPic(context, R.mipmap.kc_white_key, 0xFF34B4FF));
                 }
-            }else{
+            } else {
                 iv.setImageDrawable(getTintPic(context, R.mipmap.kc_white_key, Color.WHITE));
+            }
+        }
+
+        //改变黑键键的颜色
+        LinearLayout bk = (LinearLayout) vg.findViewById(R.id.black_keys);
+        for (int i = 0; i < bk.getChildCount(); i++) {
+            ImageView iv = (ImageView) bk.getChildAt(i);
+            if (keyIndex  - 1015 - 1 == i) {
+                if (isKeyRed) {
+                    iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.key_red_right));
+                } else {
+                    iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.key_blue_left));
+                }
+            } else {
+                iv.setImageDrawable(context.getResources().getDrawable(R.mipmap.kc_black_key));
             }
         }
 
         noteList = null;
     }
 
+    public void offAllLight(MidiOutputDevice mOutputDevice){
+        if(mOutputDevice!=null){
+            for (int i = 21; i < 109; i++) {
+                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
+            }
+        }
+    }
+
     /**
-     F0 4D 4C 4C 45 15 01 F7    键盘左起第一键对应的红灯亮
-     F0 4D 4C 4C 45 15 00 F7    键盘左起第一键对应的红灯熄灭
-     F0 4D 4C 4C 45 15 11 F7    键盘左起第一键对应的蓝灯亮
-     F0 4D 4C 4C 45 15 10 F7    键盘左起第一键对应的蓝灯熄灭
-     * @param note
+     * F0 4D 4C 4C 45 15 01 F7    键盘左起第一键对应的红灯亮
+     * F0 4D 4C 4C 45 15 00 F7    键盘左起第一键对应的红灯熄灭
+     * F0 4D 4C 4C 45 15 11 F7    键盘左起第一键对应的蓝灯亮
+     * F0 4D 4C 4C 45 15 10 F7    键盘左起第一键对应的蓝灯熄灭
+     *
+     * @param note(21 - 108)
      * @param isRed
      * @return
      */
-    public static byte[] getlightCode(int note, boolean isRed,boolean isOn){
+    public static byte[] getlightCode(int note, boolean isRed, boolean isOn) {
 
         byte mNote = (byte) note;
         byte mOn;
-        if(isRed){
-            if(isOn){
+        if (isRed) {
+            if (isOn) {
                 mOn = 0x01;
-            }else{
+            } else {
                 mOn = 0x00;
             }
-        }else{
-            if(isOn){
+        } else {
+            if (isOn) {
                 mOn = 0x11;
-            }else{
+            } else {
                 mOn = 0x10;
             }
         }
 
-        byte[] codes = {(byte) 0xF0,0x4D,0x4C,0x4C,0x45,mNote,mOn,(byte) 0xF7};
+        byte[] codes = {(byte) 0xF0, 0x4D, 0x4C, 0x4C, 0x45, mNote, mOn, (byte) 0xF7};
 
         return codes;
     }
 
+    /***
+     * 根据乐谱亮灯
+     *
+     * @param context
+     * @param dur
+     * @param color
+     * @param index
+     * @throws InterruptedException
+     */
+    public void lightTempo(MidiOutputDevice outPut, long[] dur, int[] color, int[] index) throws InterruptedException {
+        this.mOutputDevice = outPut;
+        final long[] idur = dur;      //音符间隔       音符个数
+        final int[] icolor = color;   //色值判断
+        final int[] iindex = index;  //亮灯位置
+        for (int n = 0; n < idur.length; n++) {
+
+            if (iindex[n] != -1) {
+                //每个音符亮灯时长
+                if (icolor[n] == 1) {
+                    beat(iindex[n], true, idur[n]);
+                } else if (icolor[n] == 0) {
+                    beat(iindex[n], false, idur[n]);
+                }
+                //和下个音符间隔时长
+                Thread.sleep(2);
+            } else {
+                Thread.sleep(1000);
+            }
+        }
+    }
+
+    //闪烁一次灯
+    public void beat(int index, final boolean isRed, final long time) {
+        index = index + 21;
+        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,true));
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,false));
+
+    }
+
+    /**
+     * 返回对应课程布局
+     * @return
+     */
+    public int[] getPlayLayouts(int id){
+
+        int[] ls = {R.layout.include_score};
+        return ls;
+
+    }
 
     /**
      * 生成 跟奏 需要的乐谱
+     *
      * @param color
      * @param note
      * @return
      */
-    private static ArrayList<NoteInfo> setNoteList(int[] note, int[] color){
+    private static ArrayList<NoteInfo> setNoteList(int[] note, int[] color) {
         ArrayList<NoteInfo> al = new ArrayList<NoteInfo>();
-        for(int i=0,m=1; i<note.length;i++){
-            if(note[i]==-1){
+        for (int i = 0, m = 1; i < note.length; i++) {
+            if (note[i] == -1) {
                 continue;
             }
             NoteInfo ni = new NoteInfo();
             ni.setNote(note[i]);
             ni.setNoteIndex(m);
             ni.setKeyIndex(getKeyIndex(note[i]));
-            ni.setIdNoteRed(color[i]==1?true:false);
+            ni.setIdNoteRed(color[i] == 1 ? true : false);
             al.add(ni);
             m++;
         }
@@ -178,12 +280,13 @@ public class MelodyU {
 
     /**
      * 根据音符号 获取琴键 index
+     *
      * @param noteIndex
      * @return
      */
-    public static int getKeyIndex(int noteNum){
-        int result  = -1;
-        switch(noteNum) {
+    public static int getKeyIndex(int noteNum) {
+        int result = -1;
+        switch (noteNum) {
             case 27:
                 result = 1;
                 break;
@@ -226,20 +329,58 @@ public class MelodyU {
             case 50:
                 result = 14;
                 break;
+            case 51:
+                result = 15;
+                break;
+
+
+            case 28:
+                result = 1016;
+                break;
+            case 30:
+                result = 1017;
+                break;
+            case 33:
+                result = 1018;
+                break;
+            case 35:
+                result = 1019;
+                break;
+            case 37:
+                result = 1020;
+                break;
+            case 40:
+                result = 1021;
+                break;
+            case 42:
+                result = 1022;
+                break;
+            case 45:
+                result = 1023;
+                break;
+            case 47:
+                result = 1024;
+                break;
+            case 49:
+                result = 1025;
+                break;
+
+
+
         }
         return result;
     }
 
 
-    private void getNotes(ViewGroup vg){
-        if(noteList==null){
+    private void getNotes(ViewGroup vg) {
+        if (noteList == null) {
             noteList = new ArrayList<>();
         }
-        for(int i=0;i<vg.getChildCount();i++){
-            if(vg.getChildAt(i) instanceof ViewGroup){
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            if (vg.getChildAt(i) instanceof ViewGroup) {
                 getNotes((ViewGroup) vg.getChildAt(i));
-            }else{
-                if(vg.getChildAt(i).getTag()!=null && !TextUtils.isEmpty(vg.getChildAt(i).getTag().toString())){
+            } else {
+                if (vg.getChildAt(i).getTag() != null && !TextUtils.isEmpty(vg.getChildAt(i).getTag().toString())) {
                     noteList.add((ImageView) vg.getChildAt(i));
                 }
             }
@@ -258,12 +399,12 @@ public class MelodyU {
     }
 
 
-
-
     private static MelodyU instance;
+
     // 私有化构造方法，变成单例模式
     private MelodyU() {
     }
+
     // 对外提供一个该类的实例，考虑多线程问题，进行同步操作
     public static MelodyU getInstance() {
         if (instance == null) {
@@ -276,4 +417,18 @@ public class MelodyU {
         return instance;
     }
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
