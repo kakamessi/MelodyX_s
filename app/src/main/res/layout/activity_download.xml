@@ -10,12 +10,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
 
-        <ImageView
+<!--        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/download_title_bg"/>
+            android:background="@mipmap/download_title_bg"/>-->
 
         <ImageButton
             android:id="@+id/ib_back"

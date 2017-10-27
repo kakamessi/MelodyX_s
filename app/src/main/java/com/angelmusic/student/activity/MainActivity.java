@@ -102,7 +102,7 @@ public class MainActivity extends BaseMidiActivity {
         wifiName = NetworkUtil.getWifiName(this);//获取当前pad连接的wifi名称
         seatId = SharedPreferencesUtil.getString("seatNo", "00");
         roomName = SharedPreferencesUtil.getString("roomName", "00");
-        schoolName = SharedPreferencesUtil.getString("schoolName", "天使音乐");
+        schoolName = SharedPreferencesUtil.getString("schoolName", "智慧音乐课堂");
         pianoConStatus = "未连接";//钢琴是否连接
     }
 
