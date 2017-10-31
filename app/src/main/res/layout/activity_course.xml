@@ -28,10 +28,11 @@
         <RelativeLayout
             android:id="@+id/rl_loading"
             android:gravity="center"
+            android:background="@mipmap/course_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:text="加载中..."
+                android:text="请看大屏幕"
                 android:textColor="#6eccba"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
