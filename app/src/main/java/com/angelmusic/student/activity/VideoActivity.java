@@ -227,7 +227,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
             /******  学生端  ******/
             //是否投屏
-            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
+/*            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
                 swichPlayScr(ab.getStringByPositon(3));
                 //是否亮灯
                 if (1 == ab.getCodeByPositon(4)) {
@@ -235,14 +235,14 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 }
             }else{
                 setUIType(R.id.rl_loading);
-            }
+            }*/
 
-/*            *//******  教师端  ******//*
+            /******  教师端  ******/
             swichPlayScr(ab.getStringByPositon(3));
             //是否亮灯
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
-            }*/
+            }
 
         }
     }
@@ -263,7 +263,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         int[] ls = MelodyU.getInstance().getPlayLayouts(-1);
         for (int i = 0; i < ls.length; i++) {
             vg = (LinearLayout) getLayoutInflater().inflate(ls[i], null);
-            ViewGroup vgTop = (ViewGroup) vg.findViewById(R.id.rl_top);
+            ViewGroup vgTop = (ViewGroup)vg.findViewById(R.id.rl_top);
             for (int n = 0; n < vgTop.getChildCount(); n++) {
                 if (tag.equals((String) vgTop.getChildAt(n).getTag())) {
                     replaceLayout(rlScore, ls[i]);
@@ -321,7 +321,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
         //这里暂停 会出现异常情况
         if(vv.isPlaying()){
-            vv.pause();
+            vv.stopPlayback();
         }
     }
 
