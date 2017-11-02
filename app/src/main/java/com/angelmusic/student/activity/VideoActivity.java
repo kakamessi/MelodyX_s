@@ -227,7 +227,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
             /******  学生端  ******/
             //是否投屏
-/*            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
+            if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
                 swichPlayScr(ab.getStringByPositon(3));
                 //是否亮灯
                 if (1 == ab.getCodeByPositon(4)) {
@@ -235,14 +235,14 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 }
             }else{
                 setUIType(R.id.rl_loading);
-            }*/
+            }
 
             /******  教师端  ******/
-            swichPlayScr(ab.getStringByPositon(3));
+/*            swichPlayScr(ab.getStringByPositon(3));
             //是否亮灯
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
-            }
+            }*/
 
         }
     }
