@@ -320,9 +320,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         stopTempleLight();
 
         //这里暂停 会出现异常情况
-        if(vv.isPlaying()){
-            vv.stopPlayback();
-        }
+        vv.stopPlayback();
     }
 
     private void startTemple() {
