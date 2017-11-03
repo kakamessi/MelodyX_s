@@ -8,7 +8,7 @@ android {
         abortOnError false
     }
     defaultConfig {
-        applicationId "com.angelmusic.student"
+        applicationId "com.hzdl.student"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
