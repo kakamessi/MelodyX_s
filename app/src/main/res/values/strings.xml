@@ -2,7 +2,7 @@
     <!--APP名称-->
     <string name="app_name">"天赋"</string>
     <!--请求信息时的域名信息-->
-    <string name="domain_name_request">http://newapp.tianshiyinyue.cn</string>
+    <string name="domain_name_request">http://p.w3cstudy.cc</string>
     <!--下载用的域名-->
     <string name="domain_name_download">http://video.tianshiyinyue.cn</string>
     <!--测试用-->

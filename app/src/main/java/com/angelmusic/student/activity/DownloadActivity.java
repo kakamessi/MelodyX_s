@@ -248,9 +248,9 @@ public class DownloadActivity extends BaseActivity {
 
         String schoolId = SharedPreferencesUtil.getString(Constant.CACHE_SCHOOL_ID, "-1");
         Toast.makeText(this,schoolId,0).show();
-        if(schoolId.equals("-1")){
-            return;
-        }
+//        if(schoolId.equals("-1")){
+//            return;
+//        }
         String domainNameRequest = getResources().getString(R.string.domain_name_request);
         String courseInfoJson = getResources().getString(R.string.newcourse_info_json);
 
