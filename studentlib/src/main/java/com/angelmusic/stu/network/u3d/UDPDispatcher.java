@@ -2,7 +2,7 @@ package com.angelmusic.stu.network.u3d;
 
 import android.os.Handler;
 
-import com.angelmusic.stu.network.model.NetParams;
+import com.angelmusic.stu.server.socket.constant.NetParams;
 import com.angelmusic.stu.network.socket.AbsReceiver;
 import com.angelmusic.stu.network.socket.udp.UDPRecThread;
 import com.angelmusic.stu.network.socket.udp.UDPWrite;
@@ -33,7 +33,7 @@ public class UDPDispatcher implements IDispatcher {
         udpThread.open();
 
         if("".equals(host)){
-            host = NetParams.BC_HOST;
+            host = NetParams.UDP_HOST;
         }
 
         SocketAddress adds = new InetSocketAddress(host, NetParams.PORT);
@@ -47,7 +47,7 @@ public class UDPDispatcher implements IDispatcher {
         udpThread.openOnAndroid(handler);
 
         if("".equals(host)){
-            host = NetParams.BC_HOST;
+            host = NetParams.UDP_HOST;
         }
 
         SocketAddress adds = new InetSocketAddress(host, NetParams.PORT);

@@ -6,12 +6,12 @@ package com.angelmusic.stu.server.socket.constant;
 
 public class NetParams {
 
-    public static final String HOST = "192.168.2.146";
-    public static final int PORT = 20000;
+    public static String HOST = "192.168.2.146";
+    public static final int PORT = 20000 + 1;
 
     public static final String UDP_HOST = "255.255.255.255";
-    public static final int UDP_PORT = 8000;
-    public static final int TEACHER_UDP_PORT = 8001;
+    public static final int UDP_PORT = 8000 + 1;
+    public static final int TEACHER_UDP_PORT = 8001 + 1;
 
     /**
      * 客户端主动断开连接
