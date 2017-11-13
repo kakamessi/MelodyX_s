@@ -22,6 +22,13 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 public class MelodyU {
 
+    //----钢琴指令-------------------------------------------------------------------------------------------
+    //开启静音协议
+    public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
+    //关闭静音
+    public static byte[] ACTION_UNMUTE = { 0x1b, (byte)0xbF, 0x07, 0x7f };
+
+
     //-----数据段start---------------------------------------------------------------------------------------------
 
     public static long[] d_starttime_1 = {5000};
@@ -31,11 +38,11 @@ public class MelodyU {
             2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
 
     public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
-                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
-                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+            47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+            47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
     public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1};
+            1, 1, 1, 1, 1, 1, 1, 1,1,
+            1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static ArrayList<NoteInfo> course_1 = new ArrayList<>();
@@ -208,7 +215,7 @@ public class MelodyU {
      * @param index
      * @throws InterruptedException
      */
-    public void lightTempo(MidiOutputDevice outPut, long[] dur, int[] color, int[] index) throws InterruptedException {
+    public void lightTempo(MidiOutputDevice outPut,long[] dur, int[] color, int[] index) throws InterruptedException {
         this.mOutputDevice = outPut;
         final long[] idur = dur;      //音符间隔       音符个数
         final int[] icolor = color;   //色值判断
