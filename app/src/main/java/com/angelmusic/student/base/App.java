@@ -71,7 +71,7 @@ public class App extends Application {
         super.onCreate();
 
         myApplication = this;
-        //initCrash();
+        initCrash();
         initService();
         LogUtil.isDebug = true;//设置是否打印Log日志
         initOkHttp();//初始化网络框架
