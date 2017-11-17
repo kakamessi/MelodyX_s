@@ -246,11 +246,12 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                     startTemple();
                 }
             }else{
+                resetVideo();
                 setUIType(R.id.rl_loading);
             }
 
-/*            *//******  教师端  ******//*
-            swichPlayScr(ab.getStringByPositon(3));
+            /******  教师端  ******/
+/*            swichPlayScr(ab.getStringByPositon(3));
             //是否亮灯
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
