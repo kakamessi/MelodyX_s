@@ -388,7 +388,10 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         }
 
-        tt.start();
+        if(tt!=null) {
+            flagV = true;
+            tt.start();
+        }
     }
 
     //note 21 -108 序号  钢琴按键排序从1开始
@@ -419,10 +422,12 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         if (tt != null) {
             tt.interrupt();
             tt = null;
+            flagV = false;
         }
     }
 
     /* 跟灯 */
+    private volatile boolean flagV = true;
     class TempleThread extends Thread {
         MidiOutputDevice md;
         long[] delay = null; //时间延迟执行
@@ -442,7 +447,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         public void run() {
             int xunhuan = 0;
             try {
-                while (true) {
+                while (flagV) {
                     if (xunhuan > delay.length - 1) {
                         if (tt != null) {
                             tt = null;
@@ -461,8 +466,6 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             }
         }
     }
-
-
 
     //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
 
