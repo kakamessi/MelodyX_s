@@ -2,6 +2,7 @@ package com.angelmusic.student.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -249,6 +250,13 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 resetVideo();
                 setUIType(R.id.rl_loading);
             }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MelodyU.getInstance().showLight(getMidiOutputDevice());
+                }
+            },3000);
+
 
             /******  教师端  ******/
 /*            swichPlayScr(ab.getStringByPositon(3));
@@ -284,6 +292,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)){
+            nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
+
+        }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)){
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
         }
