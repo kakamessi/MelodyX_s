@@ -250,12 +250,6 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 resetVideo();
                 setUIType(R.id.rl_loading);
             }
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    MelodyU.getInstance().showLight(getMidiOutputDevice());
-                }
-            },3000);
 
 
             /******  教师端  ******/
@@ -264,6 +258,13 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             if (1 == ab.getCodeByPositon(4)) {
                 startTemple();
             }*/
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MelodyU.getInstance().showLight(getMidiOutputDevice());
+                }
+            },3000);
 
         }
     }
