@@ -246,7 +246,7 @@ public class DownloadActivity extends BaseActivity {
      */
     private void initCourse() {
 
-        String schoolId = SharedPreferencesUtil.getString(Constant.CACHE_SCHOOL_ID, "-1");
+        String schoolId = SharedPreferencesUtil.getString(Constant.CACHE_SCHOOL_ID, "");
         Toast.makeText(this,schoolId,0).show();
 //        if(schoolId.equals("-1")){
 //            return;
