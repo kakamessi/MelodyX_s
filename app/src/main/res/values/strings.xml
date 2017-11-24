@@ -12,7 +12,7 @@
     <!--学生登录接口-->
     <string name="stu_login">/client/stuLogin</string>
     <!--apk下载接口-->
-    <string name="apk_download">http://video.angelmusic360.com</string>
+    <string name="apk_download">http://video.w3cstudy.cc</string>
     <!--常规课-->
     <string name="idle_text">请看大屏幕</string>
     <!--首页背景图信息接口-->

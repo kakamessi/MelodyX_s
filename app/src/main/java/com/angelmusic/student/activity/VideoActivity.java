@@ -259,12 +259,14 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                 startTemple();
             }*/
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    MelodyU.getInstance().showLight(getMidiOutputDevice());
-                }
-            },3000);
+            if("1-1-3-2.mp4".equals(ab.getStringByPositon(3))) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MelodyU.getInstance().showLight(getMidiOutputDevice());
+                    }
+                }, 3000);
+            }
 
         }
     }
