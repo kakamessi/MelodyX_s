@@ -119,7 +119,7 @@ public class MainActivity extends BaseMidiActivity {
         switch (view.getId()) {
             case R.id.ib_download:
                 //跳转到下载页
-                startActivity(new Intent(MainActivity.this, DownloadActivity.class));
+                startActivity(new Intent(MainActivity.this, H5Activity.class));
                 overridePendingTransition(R.anim.bottom_in, R.anim.bottom_out);
 
                 break;
@@ -161,9 +161,14 @@ public class MainActivity extends BaseMidiActivity {
     private void doAction(String str) {
         ab = ActionResolver.getInstance().resolve(str);
 
-        if(ab.getCodeByPositon(1)== ActionProtocol.CODE_ACTION_COURSE){
+        if(ab.getCodeByPositon(0)== ActionProtocol.CODE_ACTION_COURSE){
             if(ab.getCodeByPositon(2)==1){
                 Intent intent=new Intent(MainActivity.this,VideoActivity.class);
+                startActivity(intent);
+            }
+        }else if(ab.getCodeByPositon(0)== 2){
+            if(ab.getCodeByPositon(1)== 1){
+                Intent intent=new Intent(MainActivity.this,H5Activity.class);
                 startActivity(intent);
             }
         }

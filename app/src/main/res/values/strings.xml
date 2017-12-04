@@ -3,16 +3,14 @@
     <string name="app_name">"天赋"</string>
     <!--请求信息时的域名信息-->
     <string name="domain_name_request">http://47.104.96.204:8080</string>
-    <!--下载用的域名-->
-    <string name="domain_name_download">http://video.tianshiyinyue.cn</string>
+    <!--apk下载接口-->
+    <string name="apk_download">http://video.w3cstudy.cc</string>
     <!--测试用-->
     <string name="test_name">http://192.168.2.110:8085</string>
     <!--版本更新检查接口-->
     <string name="apk_check_version">/client/version/versionInfo.json</string>
     <!--学生登录接口-->
     <string name="stu_login">/client/stuLogin</string>
-    <!--apk下载接口-->
-    <string name="apk_download">http://video.w3cstudy.cc</string>
     <!--常规课-->
     <string name="idle_text">请看大屏幕</string>
     <!--首页背景图信息接口-->
@@ -25,6 +23,8 @@
     <string name="newcourse_info_json">/client/course/findCourseOnlyPath.json</string>
     <!--提交学生成绩接口-->
     <string name="account_submit">/client/score/addStuScore.json</string>
+    <!--下载用的域名-->
+    <string name="domain_name_download">http://video.tianshiyinyue.cn</string>
 
 
     <!--请求曲库列表接口-->

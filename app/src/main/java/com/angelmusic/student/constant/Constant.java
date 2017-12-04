@@ -18,6 +18,8 @@ public class Constant {
     public static final String CACHE_CLASS_ID = "CACHE_CLASS_ID";
     //学生id
     public static final String CACHE_STUDENT_ID = "CACHE_STUDENT_ID";
+    //学生id
+    public static final String CACHE_STUDENT_NAME = "CACHE_STUDENT_NAME";
     //登录账户
     public static final String CACHE_LOGIN_ID = "CACHE_LOGIN_ID";
     //登录密码
@@ -28,7 +30,7 @@ public class Constant {
      * --------网络参数------------------------------------------------------------------------------------------------------------
      */
 
-    public static final String URL_ROOT = "http://10.0.0.4:8080/";
+    public static final String URL_ROOT = "http://10.0.0.2:8080/";
     public static final String URL_STU_LOGIN = "client/stuLogin.json";
 
 

@@ -10,7 +10,7 @@ public class LoginBean {
     /**
      * code : 200
      * description : 请求成功
-     * detail : {"address":"北京","age":12,"classId":100,"className":null,"entrancetime":"2017-09-13 00:00:00","gender":1,"id":334366,"name":"3","phone":"13910000013","schoolId":293,"state":1,"studentNo":"3"}
+     * detail : {"classId":1,"phone":"05631011001","schoolId":4,"className":"1班","id":1,"stuName":"1","schoolName":"宣称十一小学"}
      */
 
     private int code;
@@ -43,48 +43,22 @@ public class LoginBean {
 
     public static class DetailLoginBean {
         /**
-         * address : 北京
-         * age : 12
-         * classId : 100
-         * className : null
-         * entrancetime : 2017-09-13 00:00:00
-         * gender : 1
-         * id : 334366
-         * name : 3
-         * phone : 13910000013
-         * schoolId : 293
-         * state : 1
-         * studentNo : 3
+         * classId : 1
+         * phone : 05631011001
+         * schoolId : 4
+         * className : 1班
+         * id : 1
+         * stuName : 1
+         * schoolName : 宣称十一小学
          */
 
-        private String address;
-        private int age;
         private int classId;
-        private Object className;
-        private String entrancetime;
-        private int gender;
-        private int id;
-        private String name;
         private String phone;
         private int schoolId;
-        private int state;
-        private String studentNo;
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
+        private String className;
+        private int id;
+        private String stuName;
+        private String schoolName;
 
         public int getClassId() {
             return classId;
@@ -92,46 +66,6 @@ public class LoginBean {
 
         public void setClassId(int classId) {
             this.classId = classId;
-        }
-
-        public Object getClassName() {
-            return className;
-        }
-
-        public void setClassName(Object className) {
-            this.className = className;
-        }
-
-        public String getEntrancetime() {
-            return entrancetime;
-        }
-
-        public void setEntrancetime(String entrancetime) {
-            this.entrancetime = entrancetime;
-        }
-
-        public int getGender() {
-            return gender;
-        }
-
-        public void setGender(int gender) {
-            this.gender = gender;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
 
         public String getPhone() {
@@ -150,20 +84,36 @@ public class LoginBean {
             this.schoolId = schoolId;
         }
 
-        public int getState() {
-            return state;
+        public String getClassName() {
+            return className;
         }
 
-        public void setState(int state) {
-            this.state = state;
+        public void setClassName(String className) {
+            this.className = className;
         }
 
-        public String getStudentNo() {
-            return studentNo;
+        public int getId() {
+            return id;
         }
 
-        public void setStudentNo(String studentNo) {
-            this.studentNo = studentNo;
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getStuName() {
+            return stuName;
+        }
+
+        public void setStuName(String stuName) {
+            this.stuName = stuName;
+        }
+
+        public String getSchoolName() {
+            return schoolName;
+        }
+
+        public void setSchoolName(String schoolName) {
+            this.schoolName = schoolName;
         }
     }
 }

@@ -18,9 +18,9 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public void run() {
             if(SharedPreferencesUtil.hasKey(Constant.CACHE_LOGIN_ID)){
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
             }else{
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
             }
             finish();// 不再退回本界面
         }

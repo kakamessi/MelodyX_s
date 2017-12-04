@@ -45,8 +45,8 @@ public class LoginActivity extends BaseActivity {
         currentUsername = username.getText().toString();
         currentPassword = password.getText().toString();
 
-        currentUsername = "2";
-        currentPassword = "10000001306";
+        currentUsername = "05631011001";
+        currentPassword = "";
     }
 
     @Override
@@ -78,19 +78,17 @@ public class LoginActivity extends BaseActivity {
                 .setConnectTimeout(25).build(this);
         okHttpUtil.doGetAsync(
                 HttpInfo.Builder().setUrl(Constant.URL_ROOT + Constant.URL_STU_LOGIN)
-                        .addParam("sid", currentUsername)
-                        .addParam("studentNo", currentPassword)
+                        .addParam("account", currentUsername)
                         .build(),
                 new CallbackOk() {
                     @Override
                     public void onResponse(HttpInfo info) throws IOException {
-                        if(200==info.getRetCode()){
-
+                        if(HttpInfo.SUCCESS==info.getRetCode()){
                             LoginBean lb = GsonUtil.jsonToObject(info.getRetDetail(),LoginBean.class);
-                            SharedPreferencesUtil.setString(Constant.CACHE_LOGIN_PSW,currentPassword);
-                            Toast.makeText(LoginActivity.this,lb.getDetail().getAddress(),0).show();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            String name = lb.getDetail().getStuName();
 
+                            SharedPreferencesUtil.setString(Constant.CACHE_STUDENT_NAME,name);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }else{
                             Toast.makeText(LoginActivity.this,"登录失败",0).show();
                         }
