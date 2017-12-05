@@ -42,11 +42,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentUsername = username.getText().toString();
-        currentPassword = password.getText().toString();
-
-        currentUsername = "05631011001";
-        currentPassword = "";
     }
 
     @Override
@@ -61,6 +56,8 @@ public class LoginActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_login:
 
+                currentUsername = username.getText().toString();
+                currentPassword = password.getText().toString();
                 login();
 
 
@@ -85,14 +82,18 @@ public class LoginActivity extends BaseActivity {
                     public void onResponse(HttpInfo info) throws IOException {
                         if(HttpInfo.SUCCESS==info.getRetCode()){
                             LoginBean lb = GsonUtil.jsonToObject(info.getRetDetail(),LoginBean.class);
-                            String name = lb.getDetail().getStuName();
-
-                            SharedPreferencesUtil.setString(Constant.CACHE_STUDENT_NAME,name);
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            if(lb.getCode()==200) {
+                                String name = lb.getDetail().getStuName();
+                                SharedPreferencesUtil.setString(Constant.CACHE_STUDENT_NAME, name);
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }else{
+                                Toast.makeText(LoginActivity.this,"登录失败",0).show();
+                            }
                         }else{
                             Toast.makeText(LoginActivity.this,"登录失败",0).show();
                         }
                     }
+
                 });
     }
 
