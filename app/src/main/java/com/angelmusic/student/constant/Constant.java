@@ -30,7 +30,11 @@ public class Constant {
      * --------网络参数------------------------------------------------------------------------------------------------------------
      */
 
-    public static final String URL_ROOT = "http://10.0.0.2:8080/";
+    //public static final String URL_ROOT = "http://10.0.0.2:8080/";
+    public static final String URL_ROOT = "http://47.104.96.204:8080/";
+    public static final String DOWNLOAD_URL_ROOT = "http://video.w3cstudy.cc";
+
+
     public static final String URL_STU_LOGIN = "client/stuLogin.json";
 
 
