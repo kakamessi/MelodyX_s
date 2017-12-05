@@ -123,7 +123,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         vv.setOnCompletionListener(this);
 
         //vv.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
-        vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
+        //vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
     }
 
     @OnClick({rl_video, R.id.activity_course})
