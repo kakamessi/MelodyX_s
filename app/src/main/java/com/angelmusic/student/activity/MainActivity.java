@@ -162,7 +162,7 @@ public class MainActivity extends BaseMidiActivity {
         ab = ActionResolver.getInstance().resolve(str);
 
         if(ab.getCodeByPositon(0)== ActionProtocol.CODE_ACTION_COURSE){
-            if(ab.getCodeByPositon(2)==1){
+            if(ab.getCodeByPositon(1)==1 && ab.getCodeByPositon(2)==1){
                 Intent intent=new Intent(MainActivity.this,VideoActivity.class);
                 startActivity(intent);
             }
