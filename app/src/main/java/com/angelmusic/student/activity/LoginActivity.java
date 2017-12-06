@@ -84,7 +84,9 @@ public class LoginActivity extends BaseActivity {
                             LoginBean lb = GsonUtil.jsonToObject(info.getRetDetail(),LoginBean.class);
                             if(lb.getCode()==200) {
                                 String name = lb.getDetail().getStuName();
+                                String sid = lb.getDetail().getSchoolId() + "";
                                 SharedPreferencesUtil.setString(Constant.CACHE_STUDENT_NAME, name);
+                                SharedPreferencesUtil.setString(Constant.CACHE_SCHOOL_ID, sid);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }else{
                                 Toast.makeText(LoginActivity.this,"登录失败",0).show();

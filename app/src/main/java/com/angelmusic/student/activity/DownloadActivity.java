@@ -259,7 +259,7 @@ public class DownloadActivity extends BaseActivity {
                 .setConnectTimeout(25).build(this);
         okHttpUtil.doGetAsync(
                 HttpInfo.Builder().setUrl(domainNameRequest + courseInfoJson).addParam
-                        ("sid", "")//需要传入课程id参数
+                        ("sid", schoolId)//需要传入课程id参数
                         .build(),
                 new CallbackOk() {
                     @Override
