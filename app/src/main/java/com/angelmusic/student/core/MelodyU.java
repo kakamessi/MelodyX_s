@@ -53,11 +53,11 @@ public class MelodyU {
             2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
 
     public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
-                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
-                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+            47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+            47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
     public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1};
+            1, 1, 1, 1, 1, 1, 1, 1,1,
+            1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static long[] d_starttime_2 = {6720};
@@ -243,12 +243,12 @@ public class MelodyU {
     }
 
     public void offAllLight(MidiOutputDevice mOutputDevice){
-        if(mOutputDevice!=null){
-            for (int i = 21; i < 109; i++) {
-                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
-                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
-            }
-        }
+//        if(mOutputDevice!=null){
+//            for (int i = 21; i < 109; i++) {
+//                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, true, false));
+//                mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(i, false, false));
+//            }
+//        }
     }
 
     /**
@@ -293,7 +293,7 @@ public class MelodyU {
      * @param index
      * @throws InterruptedException
      */
-    public void lightTempo(MidiOutputDevice outPut, long[] dur, int[] color, int[] index) throws InterruptedException {
+    public void lightTempo(MidiOutputDevice outPut,long[] dur, int[] color, int[] index) throws InterruptedException {
 
         if(outPut==null) {
             return;
@@ -348,7 +348,7 @@ public class MelodyU {
         }
     }
 
-    public void open_DJY(MidiOutputDevice outPut, boolean on){
+    public void open_DJY(MidiOutputDevice outPut,boolean on){
         if(outPut==null){
             return;
         }
