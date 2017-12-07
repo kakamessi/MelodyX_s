@@ -233,7 +233,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     /****** 启动视频  是否跟灯 ******/
     public void initVedioSection() {
         COURSE_TYPE = TYPE_VEDIO;
-        setUIType(R.id.rl_video);
+        //setUIType(R.id.rl_video);  学生端黑屏bug
         if (ActionProtocol.CODE_VEDIO_ON == ab.getCodeByPositon(2) || ActionProtocol.CODE_VEDIO_OFF == ab.getCodeByPositon(2)) {
             playOrPause();
         } else if (ActionProtocol.CODE_VEDIO_CHANGE == ab.getCodeByPositon(2)) {
@@ -241,6 +241,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             /******  学生端  ******/
             //是否投屏
             if(ActionProtocol.CODE_1 == ab.getCodeByPositon(5)) {
+                setUIType(R.id.rl_video);
                 swichPlayScr(ab.getStringByPositon(3));
                 //是否亮灯
                 if (1 == ab.getCodeByPositon(4)) {
