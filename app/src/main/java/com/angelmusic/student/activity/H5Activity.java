@@ -46,6 +46,7 @@ public class H5Activity extends BaseActivity {
         mWebview.addJavascriptInterface(new AndroidtoJs(), "android");
 
         mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
+        //mWebview.loadUrl("http://q.w3cstudy.cc/s/questionForStudent.html");
 
         //设置WebChromeClient类
         mWebview.setWebChromeClient(new WebChromeClient() {
