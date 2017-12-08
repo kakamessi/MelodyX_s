@@ -46,7 +46,7 @@ public class TCPRec implements Runnable{
 
             //e可能为null 教师端删除进程 学生端崩溃
             e.printStackTrace();
-            Log.e("kaka","Connection404       connect or read Exception");
+            Log.e1("kaka","connect or read Exception!!!");
 
         }
 

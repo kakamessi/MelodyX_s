@@ -33,6 +33,16 @@ public class Log {
 					+ "\t\t" + msg + "\r\n");
 	}
 
+	public static void e1(String tag, String msg) {
+		android.util.Log.e(tag, msg);
+		// log+=msg+"\n";
+		// logs.add(msg);
+		// SaveData.SaveDataToTxt(msg);
+		if (isLog)
+			SaveData.writeError(getDate() + "\r\n" + "\t\t" + tag
+					+ "\t\t" + msg + "\r\n");
+	}
+
 	public static void w(String tag, String msg) {
 		android.util.Log.w(tag, msg);
 		// log+=msg+"\n";

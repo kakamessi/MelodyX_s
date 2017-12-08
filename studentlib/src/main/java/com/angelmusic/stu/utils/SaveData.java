@@ -103,4 +103,58 @@ public class SaveData {
 
 		}
 	}
+
+
+
+	// 三个参数
+	// 第一个是文件名字
+	// 第二个是文件存放的目录
+	// 第三个是文件内容
+	public static void writeError(String szOutText) {
+		String destDirStr = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + "/wifiLog";
+		String file = "socket.txt";
+		// 获取扩展SD卡设备状态
+		String sDStateString = Environment.getExternalStorageState();
+
+		File myFile = null;
+		// 拥有可读可写权限
+		if (sDStateString.equals(Environment.MEDIA_MOUNTED)) {
+
+			try {
+
+				// 获取扩展存储设备的文件目录
+				File SDFile = Environment
+						.getExternalStorageDirectory();
+
+				File destDir = new File(destDirStr);// 文件目录
+				if (!destDir.exists()) {
+					boolean s = destDir.mkdir();
+					Log.e("SaveData", "创建目录-->" + s);
+					// file.createNewFile();
+				}
+
+				// 打开文件
+				myFile = new File(destDir + File.separator + file);
+
+				// 判断文件是否存在,不存在则创建
+				if (!myFile.exists()) {
+					boolean createNewFile = myFile.createNewFile();
+					Log.e("SaveData", "创建文件-->" + createNewFile);
+				}
+
+				// 写数据 注意这里，两个参数，第一个是写入的文件，第二个是指是覆盖还是追加，
+				// 默认是覆盖的，就是不写第二个参数，这里设置为true就是说不覆盖，是在后面追加。
+				FileOutputStream outputStream = new FileOutputStream(myFile,
+						true);
+				outputStream.write(szOutText.getBytes());// 写入内容
+				outputStream.close();// 关闭流
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.getStackTrace();
+			}
+
+		}
+	}
 }
