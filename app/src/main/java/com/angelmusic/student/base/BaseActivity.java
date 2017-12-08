@@ -54,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setScreen();
         setContentView(setContentViewId());
         mBaseApp = App.getApplication();
+        mBaseApp.addActivity(this);
         ButterKnife.bind(this);
         setTAG();
         ActionDispatcher.getInstance().register(TAG, actionHandler);

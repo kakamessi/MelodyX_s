@@ -1,5 +1,6 @@
 package com.angelmusic.student.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +32,8 @@ import com.angelmusic.student.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -53,6 +56,9 @@ public class App extends Application {
     private final String PATCH_URL = "";//下载补丁的地址
     private String PATCH_PATH;//补丁的本地存储地址
     private final String PATCH_NAME = "hotfix.apatch";//补丁的命名
+
+    private List<Activity> activityStack = new ArrayList<Activity>();
+
     //单例
     private static App myApplication = null;
     public static App getApplication(){
@@ -224,5 +230,25 @@ public class App extends Application {
     }
     public Handler getAppHandler() {
         return appHandler;
+    }
+
+    public void addActivity(Activity aty) {
+        activityStack.add(aty);
+    }
+
+    public void removeActivity(Activity aty) {
+        activityStack.remove(aty);
+    }
+
+    /**
+     * 结束所有Activity
+     */
+    public void finishAllActivity() {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
+                activityStack.get(i).finish();
+            }
+        }
+        activityStack.clear();
     }
 }

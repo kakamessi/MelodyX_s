@@ -88,6 +88,7 @@ public class LoginActivity extends BaseActivity {
                                 SharedPreferencesUtil.setString(Constant.CACHE_STUDENT_NAME, name);
                                 SharedPreferencesUtil.setString(Constant.CACHE_SCHOOL_ID, sid);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             }else{
                                 Toast.makeText(LoginActivity.this,"登录失败",0).show();
                             }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,6 @@ import com.angelmusic.stu.u3ddownload.okhttp.OkHttpUtil;
 import com.angelmusic.stu.u3ddownload.okhttp.OkHttpUtilInterface;
 import com.angelmusic.stu.u3ddownload.okhttp.callback.CallbackOk;
 import com.angelmusic.student.R;
-import com.angelmusic.student.base.App;
 import com.angelmusic.student.base.BaseActivity;
 import com.angelmusic.student.constant.Constant;
 import com.angelmusic.student.course_download.adapter.DownloadNewAdapter;
@@ -27,7 +27,6 @@ import com.angelmusic.student.course_download.infobean.CourseItemInfo;
 import com.angelmusic.student.course_download.infobean.NewCourseInfo;
 import com.angelmusic.student.course_download.infobean.PathBean;
 import com.angelmusic.student.utils.GsonUtil;
-import com.angelmusic.student.utils.LogUtil;
 import com.angelmusic.student.utils.SharedPreferencesUtil;
 import com.angelmusic.student.utils.Utils;
 
@@ -342,5 +341,11 @@ public class DownloadActivity extends BaseActivity {
         overridePendingTransition(R.anim.top_in, R.anim.top_out);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            return true;//不执行父类点击事件
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
 
 }
