@@ -2,6 +2,7 @@ package com.angelmusic.student.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +59,14 @@ public class LoginActivity extends BaseActivity {
 
                 currentUsername = username.getText().toString();
                 currentPassword = password.getText().toString();
-                login();
+
+                if(TextUtils.isEmpty(currentUsername) && TextUtils.isEmpty(currentPassword)){
+                    SharedPreferencesUtil.setString(Constant.CACHE_SCHOOL_ID, "");
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    loginWithToken();
+                }
 
 
                 break;
@@ -68,7 +76,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    private void login() {
+    private void loginWithToken() {
 
         OkHttpUtilInterface okHttpUtil = OkHttpUtil.Builder()
                 .setCacheLevel(FIRST_LEVEL)
