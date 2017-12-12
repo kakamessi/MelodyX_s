@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hzdl.teacher.activity.CourseActivity">
+    tools:context="com.angelmusic.student.activity.VideoActivity">
 
     <RelativeLayout
         android:id="@+id/rl_top"
