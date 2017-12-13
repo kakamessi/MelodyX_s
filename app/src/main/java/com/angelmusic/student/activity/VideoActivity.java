@@ -299,13 +299,13 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)){
-            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(46),true);
 
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
 
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
-            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(39),true);
+            nextInfo = new NoteInfo(46,1,MelodyU.getKeyIndex(46),true);
 
         }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
             nextInfo = new NoteInfo(39,1,MelodyU.getKeyIndex(39),true);
