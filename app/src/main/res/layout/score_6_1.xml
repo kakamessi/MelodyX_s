@@ -23,7 +23,7 @@
             android:src="@mipmap/a1632"/>
 
         <ImageView
-            android:tag="1"
+            android:tag="21"
             android:id="@+id/a9"
             style="@style/puziyinfu_bg_02"
             android:layout_marginRight="33dp"
@@ -31,8 +31,7 @@
             android:layout_marginTop="127dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content" />
+            android:layout_alignParentEnd="true"/>
 
         <ImageView
             android:tag="20"
@@ -225,8 +224,7 @@
             android:layout_marginTop="337dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content" />
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:tag="41"
@@ -402,7 +400,14 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         >
-        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/view_score_bottom" />
+
+        <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/view_score_bottom"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="33dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="58dp" />
     </RelativeLayout>
 
 
