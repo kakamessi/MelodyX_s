@@ -103,6 +103,8 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         super.onDestroy();
         vv.stopPlayback();
         stopTempleLight();
+
+        MelodyU.getInstance().stopBeatThread(mOutputDevice);
     }
 
     @Override
@@ -374,9 +376,8 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             showTopLayout((currentPlayIndex + 1) + "");
             //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-            if(preInfo!=null){
-                offLight(preInfo);
-            }
+
+            offLight(preInfo);
             doLight(nextInfo);
             preInfo = nextInfo;
 
@@ -392,7 +393,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     }
 
     private void offLight(NoteInfo info) {
-        if(mOutputDevice==null){
+        if(mOutputDevice==null || info==null){
             return;
         }
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
@@ -401,7 +402,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     private void resetLight() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
-
+        offLight(preInfo);
         //这里暂停 会出现异常情况
         //vv.stopPlayback();
     }
@@ -466,6 +467,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         super.onMidiOutputDeviceAttached(midiOutputDevice);
         Toast.makeText(this,"钢琴已连接",0).show();
         mOutputDevice = getMidiOutputDevice();
+        MelodyU.getInstance().startBeatThread(mOutputDevice);
     }
 
     private TempleThread tt;
