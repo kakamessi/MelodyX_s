@@ -6,7 +6,6 @@ package com.angelmusic.student.core;
 
 public class ActionProtocol {
 
-
     //-公开课环节--------------------------------------------------------------------------------------
 
     //--准备上课
@@ -24,6 +23,9 @@ public class ActionProtocol {
 
     //--画谱界面
     public static final String ACTION_COURSE_NOTE = "1|3";
+
+    //--图片界面 1|4|.png
+    public static final String ACTION_COURSE_IMG = "1|4";
 
     //-测试题环节--------------------------------------------------------------------------------------
 
@@ -54,6 +56,8 @@ public class ActionProtocol {
 
     //--画谱界面
     public static final int CODE_ACTION_SCORE = 3;
+    //--图片界面
+    public static final int CODE_ACTION_IMG = 4;
 
     //--学生连接通知
     public static final int CODE_ACTION_CONNECTED = 401;
@@ -69,6 +73,5 @@ public class ActionProtocol {
         }
         return sb.toString();
     }
-
 
 }

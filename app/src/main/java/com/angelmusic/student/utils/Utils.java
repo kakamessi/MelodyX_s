@@ -1,6 +1,8 @@
 package com.angelmusic.student.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
@@ -10,8 +12,8 @@ import android.telephony.TelephonyManager;
 import com.angelmusic.student.constant.Constant;
 
 import java.io.File;
-
-import static android.R.attr.path;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Created by DELL on 2017/1/16.
@@ -94,5 +96,22 @@ public class Utils {
             file.delete();
         }
     }
+
+    public static Bitmap getBitMap(String name){
+
+        String path = getVideoPath() + name;
+        FileInputStream fis = null;
+        Bitmap bitmap = null;
+        try {
+            fis = new FileInputStream(path);
+            bitmap= BitmapFactory.decodeStream(fis);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
 
 }
