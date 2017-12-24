@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.angelmusic.stu.utils.Log;
 import com.angelmusic.student.R;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
+
+import static java.security.spec.RSAKeyGenParameterSpec.F0;
 
 /**
  * Created by wangshuai on 2017/10/18.
@@ -24,6 +27,8 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 public class MelodyU {
 
     //----钢琴指令-------------------------------------------------------------------------------------------
+    //心跳
+    public static byte[] ACTION_KEEP_ALIVE ={(byte) 0xF0, 0x4D, 0x4C, 0x4C, 0x02, 0x00, 0x00, (byte) 0xF7};
     //开启静音协议
     public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
     //关闭静音
@@ -605,6 +610,47 @@ public class MelodyU {
         return instance;
     }
 
+    public BeatThread bt;
+    public class BeatThread extends Thread{
+        private MidiOutputDevice midi;
+        public BeatThread(MidiOutputDevice mOutputDevice){
+            midi = mOutputDevice;
+        }
+        public volatile boolean exit = false;
+        public void run()
+        {
+            while (!exit){
+                try {
+                    Thread.sleep(2000);
+                    if(midi!=null) {
+                        midi.sendMidiSystemExclusive(0, ACTION_KEEP_ALIVE);
+                        //midi.sendMidiNoteOn(0x1b, (byte)0xbF, 0x07, 0x00);
+                        Log.e("kaka","------------------boom----------------------" + this.getId());
+                    }
+                    Log.e("kaka","-boom-" + this.getId());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void startBeatThread(MidiOutputDevice mO){
+        bt = new BeatThread(mO);
+        bt.start();
+    }
+
+    public void stopBeatThread(MidiOutputDevice mO){
+        if(bt!=null) {
+            bt.exit = true;
+            bt.interrupt();
+            try {
+                bt.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 
