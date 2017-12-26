@@ -27,6 +27,7 @@ import com.angelmusic.student.base.BaseMidiActivity;
 import com.angelmusic.student.core.ActionBean;
 import com.angelmusic.student.core.ActionProtocol;
 import com.angelmusic.student.core.ActionResolver;
+import com.angelmusic.student.core.MelodyU;
 import com.angelmusic.student.infobean.SeatDataInfo;
 import com.angelmusic.student.utils.NetworkUtil;
 import com.angelmusic.student.utils.SharedPreferencesUtil;
@@ -89,6 +90,7 @@ public class MainActivity extends BaseMidiActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        MelodyU.getInstance().stopBeatThread(null);
     }
 
     @Override

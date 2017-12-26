@@ -108,7 +108,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         vv.stopPlayback();
         stopTempleLight();
 
-        MelodyU.getInstance().stopBeatThread(mOutputDevice);
+        //MelodyU.getInstance().stopBeatThread(mOutputDevice);
     }
 
     @Override
@@ -542,7 +542,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
                         }
                     }
                 }
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
             }
         }
     }

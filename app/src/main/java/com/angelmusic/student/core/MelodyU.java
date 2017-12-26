@@ -18,7 +18,6 @@ import java.util.Random;
 
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static java.security.spec.RSAKeyGenParameterSpec.F0;
 
 /**
  * Created by wangshuai on 2017/10/18.
@@ -61,11 +60,11 @@ public class MelodyU {
             2000,2000,2000,2000,2000*4,2000,2000,2000,2000,
             2000,2000,2000,2000,2000,2000,2000,2000,2000*4,};
     public static int[] d_note_1 = {39,40,41,42,43,44,45,46,
-                                  47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
-                                  47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
+            47 ,48 ,49 ,50 ,51 , 51 , 50 ,49 ,48,
+            47 ,46 ,45, 44, 43 ,42 ,41 ,40 ,39};
     public static int[] d_color_1 = {1, 1, 1, 1, 1, 1, 1, 1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1,
-                                   1, 1, 1, 1, 1, 1, 1, 1,1};
+            1, 1, 1, 1, 1, 1, 1, 1,1,
+            1, 1, 1, 1, 1, 1, 1, 1,1};
 
 
     public static long[] d_starttime_2 = {6720};
@@ -409,18 +408,14 @@ public class MelodyU {
     }
 
     //闪烁一次灯
-    private void beat(int index, final boolean isRed, final long time) {
+    private void beat(int index, final boolean isRed, final long time) throws InterruptedException{
         if(mOutputDevice==null){
             return;
         }
 
         index = index + 21;
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,true));
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(time);
         mOutputDevice.sendMidiSystemExclusive(0,MelodyU.getlightCode(index,isRed,false));
 
     }
@@ -430,9 +425,13 @@ public class MelodyU {
         Random random = new Random();
         int max=60;
         int min=29;
-        for(int i = 0; i<20; i++){
-            int p = random.nextInt(max)%(max-min+1) + min;
-            beat(p,true,500);
+        try {
+            for(int i = 0; i<10; i++){
+                int p = random.nextInt(max)%(max-min+1) + min;
+                beat(p,true,600);
+            }
+        }catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -625,9 +624,9 @@ public class MelodyU {
                     if(midi!=null) {
                         midi.sendMidiSystemExclusive(0, ACTION_KEEP_ALIVE);
                         //midi.sendMidiNoteOn(0x1b, (byte)0xbF, 0x07, 0x00);
-                        Log.e("kaka","------------------boom----------------------" + this.getId());
+
                     }
-                    Log.e("kaka","-boom-" + this.getId());
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
