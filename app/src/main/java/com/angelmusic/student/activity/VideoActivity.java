@@ -343,6 +343,44 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
         }
 
+        // 9 - 16 课  1 1 0   111   111
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_1)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_2)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_10)) {
+            nextInfo = new NoteInfo(38, 1, MelodyU.getKeyIndex(38), false);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_11)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_12)) {
+            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_13)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_14)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_15)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_16)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+
+        }
+
         MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
         //亮灯显示
         doLight(nextInfo);
