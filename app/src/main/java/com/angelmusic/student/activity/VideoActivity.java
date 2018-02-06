@@ -419,7 +419,12 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
     private NoteInfo preInfo = null;
 
     /******
-     * 输入检测  正确则返回下一个音符信息
+     *
+     *   1，  判断是否输入正确
+     *   2，  关闭之前的灯
+     *   3，  点亮之后的灯
+     *
+     *
      ******/
     private void checkInput(int note) {
         NoteInfo nextInfo = null;
@@ -429,19 +434,43 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             /****** 循环判断 ******/
             if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
                 currentPlayIndex = 0;
-            } else {
+            }else if(nextInfo.getHitCount() == 0){
+
+            }else {
                 currentPlayIndex++;
             }
 
-            //处理多页面 加载正确的页面
+            /****** 处理多页面 加载正确的页面 ******/
             showTopLayout((currentPlayIndex + 1) + "");
             //下一个音符的UI显示
             MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
 
-            offLight(preInfo);
-            doLight(nextInfo);
+            /****** 熄灭之前的灯 ******/
+            if(nextInfo.getHitCount()==1) {
+                //双手弹奏
+                offLight(nextInfo);
+
+            }else{
+                if (preInfo != null) {
+                    offLight(preInfo);
+                }
+            }
+
+            /****** 亮下一个灯 ******/
+            if(nextInfo.getHitCount()==0) {
+                //双手弹奏
+            }else{
+                doLight(nextInfo);
+            }
+
+
             preInfo = nextInfo;
 
+            if(nextInfo.getHitCount()==0){
+                nextInfo.setHitCount(1);
+            }else if(nextInfo.getHitCount()==1){
+                nextInfo.setHitCount(0);
+            }
         }
     }
 
@@ -454,6 +483,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
+        if(nextInfo.getInfo()!=null){
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getInfo().getNote() + 21, nextInfo.getInfo().isIdNoteRed(), true));
+        }
     }
 
     private void offLight(NoteInfo info) {
