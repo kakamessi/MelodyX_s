@@ -34,6 +34,7 @@ import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
 import static com.angelmusic.student.R.id.rl_video;
+import static com.angelmusic.student.base.App.init;
 import static com.angelmusic.student.core.MelodyU.d_color_1;
 import static com.angelmusic.student.core.MelodyU.d_color_2;
 import static com.angelmusic.student.core.MelodyU.d_color_3;
@@ -56,7 +57,7 @@ import static com.angelmusic.student.core.MelodyU.d_starttime_4;
  * 2- 钢琴亮灯
  * 3- 钢琴静音
  */
-public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
+public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
 
     @BindView(R.id.vv)
@@ -92,6 +93,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
         super.onCreate(savedInstanceState);
         initVV();
         initMidi();
+        initH5();
         mOutputDevice = getMidiOutputDevice();
         setUIType(R.id.rl_loading);
 
@@ -186,6 +188,11 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        if(ab.getCodeByPositon(7)==1){
+            //进入h5
+
+
+        }
     }
 
     @Override
@@ -211,6 +218,7 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
      ******/
     @Override
     protected void handleMsg(Message action) {
+        super.handleMsg(action);
         doAction((String) action.obj);
     }
 
@@ -427,50 +435,46 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
      *
      ******/
     private void checkInput(int note) {
+
+        NoteInfo currentInfo = null;
         NoteInfo nextInfo = null;
-        //判断对错
-        if ((nextInfo = MelodyU.checkInputX(note, currentPlayIndex, ab.getStringByPositon(2))) != null) {
 
-            /****** 循环判断 ******/
-            if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
-                currentPlayIndex = 0;
-            }else if(nextInfo.getHitCount() == 0){
+        /****** 输入判断 ******/
+        if (MelodyU.checkInputXX(note, currentPlayIndex, ab.getStringByPositon(2))) {
 
-            }else {
-                currentPlayIndex++;
-            }
+            currentInfo = MelodyU.getInfoByIndex(currentPlayIndex,ab.getStringByPositon(2));
+            nextInfo = MelodyU.getInfoByIndex(currentPlayIndex+1,ab.getStringByPositon(2));
 
-            /****** 处理多页面 加载正确的页面 ******/
-            showTopLayout((currentPlayIndex + 1) + "");
-            //下一个音符的UI显示
-            MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-
-            /****** 熄灭之前的灯 ******/
-            if(nextInfo.getHitCount()==1) {
-                //双手弹奏
-                offLight(nextInfo);
+            //当前环节没有结束，熄灭一个灯    双手弹奏
+            if(!currentInfo.isFinish()){
+                offLight(currentInfo.getNoteByid(note));
 
             }else{
+                //下一个
                 if (preInfo != null) {
                     offLight(preInfo);
                 }
+                /****** 处理多页面 加载正确的页面 TAG搜索******/
+                showTopLayout((currentPlayIndex + 1) + "");
+                //下一个音符的UI显示
+                MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+
             }
 
-            /****** 亮下一个灯 ******/
-            if(nextInfo.getHitCount()==0) {
-                //双手弹奏
-            }else{
-                doLight(nextInfo);
+            currentInfo.setUsedStatu(note);
+            /****** 索引改变 ******/
+            if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
+                currentPlayIndex = 0;
+            }else if(currentInfo.isFinish()){
+                currentPlayIndex++;
             }
 
-
+            //状态重置
+            if(currentInfo.isFinish()){
+                currentInfo.reSet();
+            }
             preInfo = nextInfo;
 
-            if(nextInfo.getHitCount()==0){
-                nextInfo.setHitCount(1);
-            }else if(nextInfo.getHitCount()==1){
-                nextInfo.setHitCount(0);
-            }
         }
     }
 
@@ -493,6 +497,9 @@ public class VideoActivity extends BaseMidiActivity implements MediaPlayer.OnPre
             return;
         }
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
+        if(info.getInfo()!=null){
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), true));
+        }
     }
 
     private void resetLight() {
