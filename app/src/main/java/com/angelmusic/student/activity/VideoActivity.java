@@ -454,6 +454,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                 if (preInfo != null) {
                     offLight(preInfo);
                 }
+                doLight(nextInfo);
+
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
                 showTopLayout((currentPlayIndex + 1) + "");
                 //下一个音符的UI显示

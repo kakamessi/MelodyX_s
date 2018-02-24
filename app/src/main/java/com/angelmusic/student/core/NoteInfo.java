@@ -87,7 +87,7 @@ public class NoteInfo {
         this.idNoteRed = idNoteRed;
     }
 
-    //复位
+    //复位 used字段 复位
     public void reSet(){
         setUsed(false);
         if(getInfo()!=null){
@@ -95,7 +95,7 @@ public class NoteInfo {
         }
     }
 
-    //当前音符环节是否结束
+    //当前音符环节是否结束, 是否所有音符都被弹奏过 查看 isused字段
     public boolean isFinish(){
         boolean result = true;
 
@@ -110,7 +110,7 @@ public class NoteInfo {
         return result;
     }
 
-    //设置已用状态
+    //设置已用used状态 根据音符
     public void setUsedStatu(int note){
         if(getInfo()!=null && getInfo().getNote()== note){
             getInfo().setUsed(true);
