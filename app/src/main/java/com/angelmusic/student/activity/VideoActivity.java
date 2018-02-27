@@ -445,15 +445,16 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             currentInfo = MelodyU.getInfoByIndex(currentPlayIndex,ab.getStringByPositon(2));
             nextInfo = MelodyU.getInfoByIndex(currentPlayIndex+1,ab.getStringByPositon(2));
 
+            //标识已经使用状态
+            currentInfo.setUsedStatu(note);
+
             //当前环节没有结束，熄灭一个灯    双手弹奏
             if(!currentInfo.isFinish()){
                 offLight(currentInfo.getNoteByid(note));
 
             }else{
                 //下一个
-                if (preInfo != null) {
-                    offLight(preInfo);
-                }
+                offLight(currentInfo);
                 doLight(nextInfo);
 
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
@@ -463,7 +464,6 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
             }
 
-            currentInfo.setUsedStatu(note);
             /****** 索引改变 ******/
             if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
                 currentPlayIndex = 0;
@@ -475,7 +475,6 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             if(currentInfo.isFinish()){
                 currentInfo.reSet();
             }
-            preInfo = nextInfo;
 
         }
     }
