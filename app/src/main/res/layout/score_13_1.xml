@@ -23,7 +23,7 @@
 
 
         <ImageView
-            android:tag="1"
+            android:tag="28"
             android:id="@+id/a8c"
             style="@style/puziyinfu_bg_02"
             android:layout_alignParentBottom="true"
