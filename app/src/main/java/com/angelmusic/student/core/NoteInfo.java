@@ -139,6 +139,10 @@ public class NoteInfo {
             result = true;
         }
 
+        if(getNoteByid(note)==null){
+            result = true;
+        }
+
         return result;
     }
 

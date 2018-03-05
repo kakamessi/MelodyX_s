@@ -27,4 +27,8 @@ public class ActionBean {
         return codes[p];
     }
 
+    public void setStringByPositon(int p, String s){
+        codes[p] = s;
+    }
+
 }

@@ -243,6 +243,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+            //ab.setStringByPositon(2,"1-19-3-2.png");
             resetVideo();
             initPlaySection();
         } else if(ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG){
@@ -388,11 +389,16 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
 
         }
+        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_19)) {
+            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+            NoteInfo nii = new NoteInfo(27, 1, MelodyU.getKeyIndex(27), true);
+            nextInfo.setInfo(nii);
+
+        }
 
         MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
         //亮灯显示
         doLight(nextInfo);
-
         preInfo = nextInfo;
     }
 
@@ -450,12 +456,16 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
             //当前环节没有结束，熄灭一个灯    双手弹奏
             if(!currentInfo.isFinish()){
+                //Toast.makeText(VideoActivity.this,"当前环节没有结束，熄灭一个灯",0).show();
                 offLight(currentInfo.getNoteByid(note));
 
             }else{
+
+                //Toast.makeText(VideoActivity.this,"全部结束 亮下一组灯",0).show();
                 //下一个
                 offLight(currentInfo);
                 doLight(nextInfo);
+                preInfo = nextInfo;
 
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
                 showTopLayout((currentPlayIndex + 1) + "");
@@ -499,7 +509,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         }
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
         if(info.getInfo()!=null){
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), true));
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), false));
         }
     }
 
@@ -552,7 +562,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     //note 21 -108 序号  钢琴按键排序从1开始
     @Override
-    public void onMidiNoteOff(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
+    public void onMidiNoteOn(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
         super.onMidiNoteOff(sender, cable, channel, note, velocity);
         if (COURSE_TYPE == TYPE_PLAY) {
             runOnUiThread(new Runnable() {
