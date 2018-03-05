@@ -113,7 +113,7 @@
             android:layout_marginEnd="60dp" />
 
         <ImageView
-            android:tag="1"
+            android:tag="8"
             android:id="@+id/a10"
             style="@style/puziyinfu_bg_02"
             android:layout_alignTop="@+id/a1a"
