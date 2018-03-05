@@ -442,6 +442,10 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
      ******/
     private void checkInput(int note) {
 
+        if(ab==null){
+            return;
+        }
+
         NoteInfo currentInfo = null;
         NoteInfo nextInfo = null;
 
