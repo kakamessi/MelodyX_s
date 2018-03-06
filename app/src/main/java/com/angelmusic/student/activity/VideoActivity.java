@@ -475,7 +475,11 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
                 showTopLayout((currentPlayIndex + 1) + "");
                 //下一个音符的UI显示
-                MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+                if(nextInfo.getInfo()==null){
+                    MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
+                }else{
+                    MelodyU.getInstance().setNoteAndKey1(this, rlScore, nextInfo);
+                }
 
             }
 
