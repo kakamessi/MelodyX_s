@@ -188,11 +188,11 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if(ab.getCodeByPositon(7)==1){
-            //进入h5
-
-
-        }
+//        if(ab.getCodeByPositon(7)==1){
+//            //进入h5
+//
+//
+//        }
     }
 
     @Override
@@ -243,7 +243,10 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            //ab.setStringByPositon(2,"1-19-3-2.png");
+            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
+                ab.setStringByPositon(2,"1-19-3-2.png");
+            }
+
             resetVideo();
             initPlaySection();
         } else if(ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG){
@@ -460,14 +463,12 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
             //当前环节没有结束，熄灭一个灯    双手弹奏
             if(!currentInfo.isFinish()){
-                //Toast.makeText(VideoActivity.this,"当前环节没有结束，熄灭一个灯",0).show();
-                offLight(currentInfo.getNoteByid(note));
+                offLight(currentInfo.getNoteByid(note),false);
 
             }else{
 
-                //Toast.makeText(VideoActivity.this,"全部结束 亮下一组灯",0).show();
                 //下一个
-                offLight(currentInfo);
+                offLight(currentInfo,true);
                 doLight(nextInfo);
                 preInfo = nextInfo;
 
@@ -478,15 +479,13 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
             }
 
-            /****** 索引改变 ******/
-            if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
-                currentPlayIndex = 0;
-            }else if(currentInfo.isFinish()){
-                currentPlayIndex++;
-            }
-
             //状态重置
             if(currentInfo.isFinish()){
+                if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
+                    currentPlayIndex = 0;
+                }else{
+                    currentPlayIndex++;
+                }
                 currentInfo.reSet();
             }
 
@@ -507,20 +506,24 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         }
     }
 
-    private void offLight(NoteInfo info) {
+    private void offLight(NoteInfo info, boolean isCheckSon) {
         if (mOutputDevice == null || info == null) {
             return;
         }
-        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
-        if(info.getInfo()!=null){
-            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), false));
+        //mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
+        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, true, false));
+        mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, false, false));
+        if(isCheckSon && info.getInfo()!=null){
+            //mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), false));
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, true, false));
+            mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, false, false));
         }
     }
 
     private void resetLight() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
-        offLight(preInfo);
+        offLight(preInfo,true);
         //这里暂停 会出现异常情况
         //vv.stopPlayback();
     }
