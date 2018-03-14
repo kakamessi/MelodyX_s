@@ -39,18 +39,22 @@ import static com.angelmusic.student.core.MelodyU.d_color_1;
 import static com.angelmusic.student.core.MelodyU.d_color_2;
 import static com.angelmusic.student.core.MelodyU.d_color_3;
 import static com.angelmusic.student.core.MelodyU.d_color_4;
+import static com.angelmusic.student.core.MelodyU.d_color_5;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_1;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_2;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_3;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_4;
+import static com.angelmusic.student.core.MelodyU.d_duringtime_5;
 import static com.angelmusic.student.core.MelodyU.d_note_1;
 import static com.angelmusic.student.core.MelodyU.d_note_2;
 import static com.angelmusic.student.core.MelodyU.d_note_3;
 import static com.angelmusic.student.core.MelodyU.d_note_4;
+import static com.angelmusic.student.core.MelodyU.d_note_5;
 import static com.angelmusic.student.core.MelodyU.d_starttime_1;
 import static com.angelmusic.student.core.MelodyU.d_starttime_2;
 import static com.angelmusic.student.core.MelodyU.d_starttime_3;
 import static com.angelmusic.student.core.MelodyU.d_starttime_4;
+import static com.angelmusic.student.core.MelodyU.d_starttime_5;
 
 /**
  * 1- 钢琴发音
@@ -243,9 +247,14 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             initVedioSection();
 
         } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
-            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
-                ab.setStringByPositon(2,"1-19-3-2.png");
-            }
+
+//            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
+//                ab.setStringByPositon(2,MelodyU.PIC_NAME_30);
+//            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
+//                ab.setStringByPositon(2,MelodyU.PIC_NAME_31);
+//            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
+//                ab.setStringByPositon(2,MelodyU.PIC_NAME_32);
+//            }
 
             resetVideo();
             initPlaySection();
@@ -325,79 +334,81 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     //初始化音符
     private void initNoteAndLight() {
         NoteInfo nextInfo = null;
+//
+//        if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)) {
+//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)) {
+//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//
+//        // 9 - 16 课  1 1 0   111   111
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_1)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_2)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_10)) {
+//            nextInfo = new NoteInfo(38, 1, MelodyU.getKeyIndex(38), false);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_11)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_12)) {
+//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_13)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_14)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_15)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_16)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//
+//        }
+//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_19)) {
+//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+//            NoteInfo nii = new NoteInfo(27, 1, MelodyU.getKeyIndex(27), true);
+//            nextInfo.setInfo(nii);
+//
+//        }
 
-        if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)) {
-            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)) {
-            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-
-        // 9 - 16 课  1 1 0   111   111
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_1)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_2)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_10)) {
-            nextInfo = new NoteInfo(38, 1, MelodyU.getKeyIndex(38), false);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_11)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_12)) {
-            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_13)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_14)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_15)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_16)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-
-        }
-        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_19)) {
-            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-            NoteInfo nii = new NoteInfo(27, 1, MelodyU.getKeyIndex(27), true);
-            nextInfo.setInfo(nii);
-
-        }
+        nextInfo = MelodyU.getInfoByIndex(currentPlayIndex,ab.getStringByPositon(2));
 
         MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
         //亮灯显示
@@ -473,7 +484,12 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                 preInfo = nextInfo;
 
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
-                showTopLayout((currentPlayIndex + 1) + "");
+                if(currentPlayIndex + 2 > MelodyU.searchNotes(ab.getStringByPositon(2)).size()){
+                    showTopLayout("2");
+                }else{
+                    showTopLayout((currentPlayIndex + 2) + "");
+                }
+
                 //下一个音符的UI显示
                 if(nextInfo.getInfo()==null){
                     MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
@@ -556,13 +572,13 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         } else if ("第四课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         } else if ("第五课".equals(ab.getStringByPositon(6))) {
-            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+            //tt = new TempleThread(mOutputDevice, d_starttime_5, d_duringtime_5, d_color_5, d_note_5);
         } else if ("第六课".equals(ab.getStringByPositon(6))) {
-            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+            //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         } else if ("第七课".equals(ab.getStringByPositon(6))) {
-            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+            //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         } else if ("第八课".equals(ab.getStringByPositon(6))) {
-            tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+            //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         }
 
         if (tt != null) {
