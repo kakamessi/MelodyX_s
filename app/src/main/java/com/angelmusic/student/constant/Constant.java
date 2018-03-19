@@ -7,7 +7,7 @@ package com.angelmusic.student.constant;
 public class Constant {
 
     public static String FILE_PATH = "/xmelody/";
-
+    public static String FILE_PATH_CACHE = "/xmelodyc/";
 
     /***
      * --------持久化参数------------------------------------------------------------------------------------------------------------

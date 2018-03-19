@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.angelmusic.stu.network.u3d.AndroidDispatcher;
@@ -120,14 +119,19 @@ public class App extends Application {
 
         ActionDispatcher.getInstance().register(TAG, appHandler);
 
-        //String sdDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/anglefile/";
+
         String sdDir = Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH;
         File filePath = new File(sdDir);
-        File file = new File(sdDir);
         // if file doesnt exists, then create it
         if (!filePath.exists()) {
             boolean s = filePath.mkdir();
-            Log.e("App", "创建目录-->" + s);
+
+        }
+
+        String sdCache = Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE;
+        File file1 = new File(sdCache);
+        if (!file1.exists()) {
+            boolean s = file1.mkdir();
         }
 
     }

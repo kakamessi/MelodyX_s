@@ -22,7 +22,10 @@ import com.angelmusic.student.core.ActionProtocol;
 import com.angelmusic.student.core.ActionResolver;
 import com.angelmusic.student.core.MelodyU;
 import com.angelmusic.student.core.NoteInfo;
+import com.angelmusic.student.utils.FileUtil;
 import com.angelmusic.student.utils.Utils;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -114,6 +117,12 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         vv.stopPlayback();
         stopTempleLight();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FileUtil.delAllFile(Utils.getVideoPath());
+            }
+        }).start();
         //MelodyU.getInstance().stopBeatThread(mOutputDevice);
     }
 
