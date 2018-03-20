@@ -201,11 +201,16 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-//        if(ab.getCodeByPositon(7)==1){
-//            //进入h5
-//
-//
-//        }
+
+        try {
+            if(ab.getCodeByPositon(7)==1){
+                //进入h5
+                loadH5();
+            }
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override

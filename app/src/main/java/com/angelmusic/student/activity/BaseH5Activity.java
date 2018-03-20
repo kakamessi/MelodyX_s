@@ -63,6 +63,11 @@ public class BaseH5Activity extends BaseMidiActivity {
         mWebview.loadUrl("javascript:switchQuestion('" + questionIndex +"')");
     }
 
+    public void loadH5(){
+        mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
+        //mWebview.loadUrl("http://q.w3cstudy.cc/s/questionForStudent.html");
+    }
+
     public void initH5() {
 
         mWebview = (WebView) findViewById(R.id.webView);
@@ -72,7 +77,7 @@ public class BaseH5Activity extends BaseMidiActivity {
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebview.addJavascriptInterface(new AndroidtoJs(), "android");
 
-        mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
+        //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
         //mWebview.loadUrl("http://q.w3cstudy.cc/s/questionForStudent.html");
 
         //设置WebChromeClient类
