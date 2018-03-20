@@ -3,6 +3,7 @@ package com.angelmusic.student.activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -24,14 +25,19 @@ import com.angelmusic.stu.u3ddownload.utils.GsonUtil;
 import com.angelmusic.student.R;
 import com.angelmusic.student.adpater.SeatAdapter;
 import com.angelmusic.student.base.BaseMidiActivity;
+import com.angelmusic.student.constant.Constant;
 import com.angelmusic.student.core.ActionBean;
 import com.angelmusic.student.core.ActionProtocol;
 import com.angelmusic.student.core.ActionResolver;
 import com.angelmusic.student.core.MelodyU;
 import com.angelmusic.student.infobean.SeatDataInfo;
+import com.angelmusic.student.utils.Encrypter;
 import com.angelmusic.student.utils.NetworkUtil;
 import com.angelmusic.student.utils.SharedPreferencesUtil;
+import com.angelmusic.student.utils.Utils;
 import com.angelmusic.student.version_update.ApkManager;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -166,6 +172,24 @@ public class MainActivity extends BaseMidiActivity {
 
         if(ab.getCodeByPositon(0)== ActionProtocol.CODE_ACTION_COURSE){
             if(ab.getCodeByPositon(1)==1 && ab.getCodeByPositon(2)==1){
+
+                //解密操作
+                String s4 = ab.getCodes()[3];
+                final String[] names = s4.split("_");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            for(int i =0; i<names.length; i++){
+                                File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + names[i]);
+                                File f2 = new File(Utils.getVideoPath() + names[i]);
+                                Encrypter.decode(f1,f2,"xmelody");
+                            }
+                        }catch (Exception e){
+                        }
+                    }
+                }).start();
+
                 Intent intent=new Intent(MainActivity.this,VideoActivity.class);
                 startActivity(intent);
             }
