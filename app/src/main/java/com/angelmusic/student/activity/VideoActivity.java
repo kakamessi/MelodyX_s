@@ -253,14 +253,17 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
         Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
-        if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
-            if (ab.getCodeByPositon(2) == 0) {
-                VideoActivity.this.finish();
-            }
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
-            initVedioSection();
 
-        } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
+        if(ab.getCodeByPositon(0) == 1) {
+
+            if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
+                if (ab.getCodeByPositon(2) == 0) {
+                    VideoActivity.this.finish();
+                }
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_VEDIO) {
+                initVedioSection();
+
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
 
 //            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
 //                ab.setStringByPositon(2,MelodyU.PIC_NAME_30);
@@ -270,12 +273,14 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 //                ab.setStringByPositon(2,MelodyU.PIC_NAME_32);
 //            }
 
-            resetVideo();
-            initPlaySection();
-        } else if(ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG){
-            //图片界面
-            resetVideo();
-            initImgSection();
+                resetVideo();
+                initPlaySection();
+            } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_IMG) {
+                //图片界面
+                resetVideo();
+                initImgSection();
+
+            }
 
         }
     }
