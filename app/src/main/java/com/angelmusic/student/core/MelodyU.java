@@ -449,6 +449,9 @@ public class MelodyU {
         boolean result = false;
 
         ArrayList<NoteInfo> noteList = searchNotes(resId);
+        if(noteList==null){
+            return result;
+        }
         playIndex = playIndex % noteList.size();
 
         //判断正误
