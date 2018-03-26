@@ -163,6 +163,7 @@ public class MainActivity extends BaseMidiActivity {
      */
     @Override
     protected void handleMsg(Message msg) {
+
         doAction((String) msg.obj);
     }
 
@@ -173,13 +174,13 @@ public class MainActivity extends BaseMidiActivity {
         if(ab.getCodeByPositon(0)== ActionProtocol.CODE_ACTION_COURSE){
             if(ab.getCodeByPositon(1)==1 && ab.getCodeByPositon(2)==1){
 
-                //解密操作
-                String s4 = ab.getCodes()[3];
-                final String[] names = s4.split("_");
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try{
+                            //解密操作
+                            String s4 = ab.getCodes()[3];
+                            final String[] names = s4.split("_");
                             for(int i =0; i<names.length; i++){
                                 File f1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.FILE_PATH_CACHE + names[i]);
                                 File f2 = new File(Utils.getVideoPath() + names[i]);
