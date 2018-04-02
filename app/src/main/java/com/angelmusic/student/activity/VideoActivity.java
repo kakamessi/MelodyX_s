@@ -455,6 +455,25 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     }
 
     /******
+     * 显示指定图谱
+     ******/
+    private void showTopLayout(String tag,String name) {
+        //遍历viewgroup
+        LinearLayout vg = null;
+        int[] ls = MelodyU.getInstance().getPlayLayouts(name);
+        for (int i = 0; i < ls.length; i++) {
+            vg = (LinearLayout) getLayoutInflater().inflate(ls[i], null);
+            ViewGroup vgTop = (ViewGroup) vg.findViewById(R.id.rl_top);
+            for (int n = 0; n < vgTop.getChildCount(); n++) {
+                if (tag.equals((String) vgTop.getChildAt(n).getTag())) {
+                    replaceLayout(rlScore, ls[i]);
+                    return;
+                }
+            }
+        }
+    }
+
+    /******
      * 替换布局
      ******/
     private void replaceLayout(ViewGroup fu, int resId) {
