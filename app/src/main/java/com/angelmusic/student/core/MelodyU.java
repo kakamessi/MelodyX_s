@@ -79,6 +79,10 @@ public class MelodyU {
     //示范课
     public static final String PIC_NAME_D1 = "D1-1-5-1.png";
 
+    public static String[] PICS  = {PIC_NAME_1,PIC_NAME_2,PIC_NAME_3,PIC_NAME_4,PIC_NAME_5,PIC_NAME_6,PIC_NAME_7,PIC_NAME_8,PIC_NAME_9_1,PIC_NAME_9_2,
+            PIC_NAME_10,PIC_NAME_11,PIC_NAME_12,PIC_NAME_13,PIC_NAME_14,PIC_NAME_15,PIC_NAME_16,PIC_NAME_17,PIC_NAME_18,PIC_NAME_19,PIC_NAME_20,
+            PIC_NAME_21,PIC_NAME_22,PIC_NAME_23,PIC_NAME_24,PIC_NAME_25,PIC_NAME_26,PIC_NAME_27,PIC_NAME_28,PIC_NAME_29,PIC_NAME_30,
+            PIC_NAME_31,PIC_NAME_32,};
 
     //-----数据段start---------------------------------------------------------------------------------------------
     public static int[] t = {1240,1000,170,1000,170,

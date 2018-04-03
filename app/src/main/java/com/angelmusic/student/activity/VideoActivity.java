@@ -104,6 +104,14 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         mOutputDevice = getMidiOutputDevice();
         setUIType(R.id.rl_loading);
 
+
+//        doInnerAction();
+//        rlScore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                doInnerAction();
+//            }
+//        });
     }
 
     @Override
@@ -702,5 +710,14 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     //------------公共逻辑end----------------------------------------------------------------------------------------------------------------
 
+
+    //----------测试方法-----------------
+
+    int i = 0;
+    void doInnerAction(){
+        String name = MelodyU.PICS[(i++)%MelodyU.PICS.length];
+        String ac = "1|3|" + name;
+        doAction(ac);
+    }
 
 }
