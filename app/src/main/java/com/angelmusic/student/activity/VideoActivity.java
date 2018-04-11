@@ -129,7 +129,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FileUtil.delAllFile(Utils.getVideoPath());
+                //FileUtil.delAllFile(Utils.getVideoPath());
             }
         }).start();
         //MelodyU.getInstance().stopBeatThread(mOutputDevice);
