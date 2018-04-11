@@ -2,6 +2,7 @@ package com.angelmusic.student.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -27,7 +28,6 @@ public class BaseH5Activity extends BaseMidiActivity {
 
 
     public static final String URL_ROOT = "file:///android_asset/question-for-student2/";
-    private String questionIndex = "";
 
     private WebView mWebview;
     private WebSettings mWebSettings;
@@ -60,12 +60,18 @@ public class BaseH5Activity extends BaseMidiActivity {
     }
 
     private void nextQuestionImpl(){
-        mWebview.loadUrl("javascript:switchQuestion('" + questionIndex +"')");
+        mWebview.loadUrl("javascript:nextQuestionJs()");
     }
 
     public void loadH5(){
-        mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
-        //mWebview.loadUrl("http://q.w3cstudy.cc/s/questionForStudent.html");
+        //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
+        mWebview.loadUrl("http://10.0.0.9:1235");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mWebview.loadUrl("javascript:loadQuestion()");
+            }
+        },1000);
     }
 
     public void initH5() {
@@ -78,7 +84,6 @@ public class BaseH5Activity extends BaseMidiActivity {
         mWebview.addJavascriptInterface(new AndroidtoJs(), "android");
 
         //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
-        //mWebview.loadUrl("http://q.w3cstudy.cc/s/questionForStudent.html");
 
         //设置WebChromeClient类
         mWebview.setWebChromeClient(new WebChromeClient() {
@@ -129,13 +134,7 @@ public class BaseH5Activity extends BaseMidiActivity {
         if (ab.getCodeByPositon(0) == 2) {
 
             if(ab.getCodeByPositon(1) == 3){
-                questionIndex = ab.getStringByPositon(2);
                 nextQuestionImpl();
-            }else if(ab.getCodeByPositon(1) == 0){
-                finish();
-            }else if(ab.getCodeByPositon(1) == 2){
-                //教师端收到成绩  发送给h5
-                mWebview.loadUrl("javascript:callJS('" + ab.getStringByPositon(2) + "')");
             }
 
         }
@@ -149,10 +148,11 @@ public class BaseH5Activity extends BaseMidiActivity {
         // 定义JS需要调用的方法
         // 被JS调用的方法必须加入@JavascriptInterface注解
         @JavascriptInterface
-        public void submit(String args) {
+        public void submitAnd(String args) {
             Log.e("kaka","-------------------------------submit" + args);
             String name = SharedPreferencesUtil.getString(Constant.CACHE_STUDENT_NAME,"小朋友");
             AndroidDispatcher.getInstance().sendMsg(ActionProtocol.ACTION_TEST_QUESTION + "|" +  name + "=" + args);
+
         }
 
     }
