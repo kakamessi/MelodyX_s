@@ -36,6 +36,7 @@ import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
+import static android.R.attr.name;
 import static com.angelmusic.student.R.id.rl_video;
 import static com.angelmusic.student.base.App.init;
 import static com.angelmusic.student.core.MelodyU.d_color_1;
@@ -715,7 +716,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     int i = 0;
     void doInnerAction(){
-        String name = MelodyU.PICS[(i++)%MelodyU.PICS.length];
+        //String name = MelodyU.PICS[(i++)%MelodyU.PICS.length];
+        String name = MelodyU.PIC_NAME_22;
         String ac = "1|3|" + name;
         doAction(ac);
     }
