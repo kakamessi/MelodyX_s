@@ -63,13 +63,13 @@ public class BaseH5Activity extends BaseMidiActivity {
         mWebview.loadUrl("javascript:nextQuestionJs()");
     }
 
-    public void loadH5(){
+    public void loadH5(final String vName){
         //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
         mWebview.loadUrl("http://10.0.0.9:1235");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mWebview.loadUrl("javascript:loadQuestion()");
+                mWebview.loadUrl("javascript:loadQuestion('" + vName +"')");
             }
         },1000);
     }
