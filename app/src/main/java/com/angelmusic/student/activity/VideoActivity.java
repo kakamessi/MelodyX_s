@@ -637,7 +637,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     //note 21 -108 序号  钢琴按键排序从1开始
     @Override
     public void onMidiNoteOn(@NonNull MidiInputDevice sender, int cable, int channel, final int note, int velocity) {
-        super.onMidiNoteOff(sender, cable, channel, note, velocity);
+        super.onMidiNoteOn(sender, cable, channel, note, velocity);
         if (COURSE_TYPE == TYPE_PLAY) {
             runOnUiThread(new Runnable() {
                 @Override
