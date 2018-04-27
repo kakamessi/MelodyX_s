@@ -48,4 +48,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
 
     compile 'com.charonchui.vitamio:vitamio:4.2.2'
+    compile 'com.jude:rollviewpager:1.2.9'
+    compile 'com.github.chrisbanes.photoview:library:+'
+
+
 }
