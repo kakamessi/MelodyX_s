@@ -11,6 +11,11 @@ public class QuBean {
     private String state;
     private String createDate;
 
+    public QuBean(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

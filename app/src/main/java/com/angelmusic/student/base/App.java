@@ -19,6 +19,7 @@ import com.angelmusic.stu.u3ddownload.okhttp.cookie.PersistentCookieJar;
 import com.angelmusic.stu.u3ddownload.okhttp.cookie.cache.SetCookieCache;
 import com.angelmusic.stu.u3ddownload.okhttp.cookie.persistence.SharedPrefsCookiePersistor;
 import com.angelmusic.stu.utils.MyCrashHandler;
+import com.angelmusic.student.activity.MainActivity;
 import com.angelmusic.student.constant.Constant;
 import com.angelmusic.student.core.ActionDispatcher;
 import com.angelmusic.student.core.ActionType;
@@ -251,6 +252,20 @@ public class App extends Application {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
+            }
+        }
+        activityStack.clear();
+    }
+
+    /**
+     * 结束所有Activity
+     */
+    public void finishAllExceptMain() {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
+                if(activityStack.get(i).getClass().getSimpleName() != MainActivity.class.getSimpleName()) {
+                    activityStack.get(i).finish();
+                }
             }
         }
         activityStack.clear();

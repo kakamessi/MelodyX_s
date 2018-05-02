@@ -58,6 +58,14 @@
         <activity
             android:name=".activity.IdleActivity"
             android:screenOrientation="landscape"></activity>
+        <!-- 图片界面 -->
+        <activity
+            android:name=".activity.ImageActivity"
+            android:screenOrientation="landscape"></activity>
+        <!-- 图片界面 -->
+        <activity
+            android:name=".activity.ImageListActivity"
+            android:screenOrientation="landscape"></activity>
         <!-- 课程下载界面 -->
         <activity
             android:name=".activity.DownloadActivity"
