@@ -101,6 +101,11 @@ public class App extends Application {
                 String action2 = strs[1];
 
                 switch (action1) {
+                    case 0+"":
+                        //发送学生端在线消息
+                        //String stuId = SharedPreferencesUtil.getString(Constant.CACHE_STUDENT_ID,"-1");
+                        AndroidDispatcher.getInstance().sendMsg("0|2|2");
+                        break;
                     case ActionType.ACTION_RSP_ONLINE:
                         //发送tcp在线消息
                         String stuId = SharedPreferencesUtil.getString(Constant.CACHE_STUDENT_ID,"-1");

@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
 
 import com.angelmusic.student.constant.Constant;
 
@@ -49,16 +47,18 @@ public class Utils {
 
     public static String getDeviceId(Context context){
 
-        String id;
-        //android.telephony.TelephonyManager
-        TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (mTelephony.getDeviceId() != null) {
-            id = mTelephony.getDeviceId();
-        } else {
-            //android.provider.Settings;
-            id = Settings.Secure.getString(context.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
-        return id;
+//        String id;
+//        //android.telephony.TelephonyManager
+//        TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//        if (mTelephony.getDeviceId() != null) {
+//            id = mTelephony.getDeviceId();
+//        } else {
+//            //android.provider.Settings;
+//            id = Settings.Secure.getString(context.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+//        }
+//        return id;
+
+        return "asdgdsdgs";
 
     }
 
