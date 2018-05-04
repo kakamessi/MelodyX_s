@@ -214,6 +214,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         try {
             if(ab.getCodeByPositon(7)==1){
                 //进入h5
+                setUIType(R.id.webView);
                 loadH5(ab.getStringByPositon(3));
             }
         }catch (Exception e){
