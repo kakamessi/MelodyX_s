@@ -93,7 +93,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     public static final int TYPE_VEDIO = 1;
     public static final int TYPE_PLAY = 2;
     public static final int TYPE_IMG = 3;
-
+    public static final int TYPE_ANSWER = 5;
 
 
     @Override
@@ -211,15 +211,15 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     @Override
     public void onCompletion(MediaPlayer mp) {
 
-        try {
-            if(ab.getCodeByPositon(7)==1){
-                //进入h5
-                setUIType(R.id.webView);
-                loadH5(ab.getStringByPositon(3));
-            }
-        }catch (Exception e){
-
-        }
+//        try {
+//            if(ab.getCodeByPositon(7)==1){
+//                //进入h5
+//                setUIType(R.id.webView);
+//                loadH5(ab.getStringByPositon(3));
+//            }
+//        }catch (Exception e){
+//
+//        }
 
     }
 
@@ -290,9 +290,20 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                 resetVideo();
                 initImgSection();
 
+            }else if (ab.getCodeByPositon(1) == 5) {
+                //图片界面
+                resetVideo();
+                initAnswerSection();
+
             }
 
         }
+    }
+
+    private void initAnswerSection() {
+        COURSE_TYPE = TYPE_ANSWER;
+        setUIType(R.id.webView);    
+        loadH5(ab.getStringByPositon(2));
     }
 
     /******
