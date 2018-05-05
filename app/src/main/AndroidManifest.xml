@@ -80,6 +80,8 @@
             android:screenOrientation="landscape"></activity>
         <activity android:name=".activity.H5Activity" android:screenOrientation="landscape" >
         </activity>
+        <activity android:name=".activity.H5QukuActivity" android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>
