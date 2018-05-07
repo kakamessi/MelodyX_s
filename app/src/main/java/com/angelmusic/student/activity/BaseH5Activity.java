@@ -26,8 +26,8 @@ import butterknife.BindView;
 
 public class BaseH5Activity extends BaseMidiActivity {
 
-
-    public static final String URL_ROOT = "file:///android_asset/question-for-student2/";
+    //http://10.0.0.9:1235
+    public static final String URL_ROOT = "http://student.huangzhongdalv.com/";
 
     private WebView mWebview;
     private WebSettings mWebSettings;
@@ -65,7 +65,7 @@ public class BaseH5Activity extends BaseMidiActivity {
 
     public void loadH5(final String vName){
         //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
-        mWebview.loadUrl("http://10.0.0.9:1235");
+        mWebview.loadUrl(URL_ROOT);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
