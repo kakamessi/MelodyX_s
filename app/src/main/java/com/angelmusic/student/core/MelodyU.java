@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.angelmusic.stu.utils.Log;
 import com.angelmusic.student.R;
 
 import java.util.ArrayList;
@@ -25,8 +26,10 @@ import jp.kshoji.driver.midi.device.MidiOutputDevice;
 public class MelodyU {
 
     //----钢琴指令-------------------------------------------------------------------------------------------
-    //心跳
-    public static byte[] ACTION_KEEP_ALIVE ={(byte) 0xF0, 0x4D, 0x4C, 0x4C, 0x02, 0x00, 0x00, (byte) 0xF7};
+    //心跳  F0 50 00 00 00 00 F7
+    //public static byte[] ACTION_KEEP_ALIVE ={(byte) 0xF0, 0x4D, 0x4C, 0x4C, 0x02, 0x00, 0x00, (byte) 0xF7};
+    public static byte[] ACTION_KEEP_ALIVE ={(byte) 0xF0, 0x50, 0x00, 0x00, 0x00, 0x00, (byte) 0xF7};
+
     //开启静音协议
     public static byte[] ACTION_MUTE ={ 0x1b, (byte)0xbF, 0x07, 0x00};
     //关闭静音
