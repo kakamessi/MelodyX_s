@@ -14,9 +14,16 @@ import com.angelmusic.stu.utils.Log;
 import com.angelmusic.student.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
+
 
 
 /**
@@ -1172,6 +1179,85 @@ public class MelodyU {
             }
         }
     }
+
+
+    //-----蔚科 亮灯协议----------------------------------------------------------------------------------
+    private HashMap onNotes = new HashMap();
+    private NoteInfo currentNote;
+    private ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
+
+    /**
+     *
+     *  21 - 108
+     *
+     *  0x15对应的是左边第一个灯
+     *  0x7F表示控制一排灯的开关
+     *
+     * @param index
+     * @param isOn
+     */
+    public void setlightStates(boolean isRed, boolean isOn ,int index,MidiOutputDevice midiOutputDevice){
+        int p1 = 0;
+        int p2 = 0;
+        int p3 = index + 21;
+        p1 = isRed==true?0xB2:0xB1;
+        p2 = isOn==true?0x69:0x68;
+
+        if(isOn){
+//            NoteInfo ni = new NoteInfo();
+//            ni.setIdNoteRed(isRed);
+//            ni.setNote(p3);
+//            onNotes.put(p3,ni);
+            currentNote = new NoteInfo();
+            currentNote.setIdNoteRed(isRed);
+            currentNote.setNote(p3);
+
+
+        }else{
+            //onNotes.remove(p3);
+        }
+
+        midiOutputDevice.sendMidiControlChange(0,p1,p2,p3);
+    }
+
+    public void startLight(final MidiOutputDevice midiOutputDevice){
+        pool.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+//                Iterator iter = onNotes.entrySet().iterator();
+//                while (iter.hasNext()) {
+//                    Map.Entry entry = (Map.Entry) iter.next();
+//                    NoteInfo val = (NoteInfo) entry.getValue();
+//                    int c1 = val.isIdNoteRed() ==true?0xB2:0xB1;
+//                    midiOutputDevice.sendMidiControlChange(0,c1,0x69,val.getNote());
+//                }
+                if(currentNote!=null) {
+                    int redNum = currentNote.isIdNoteRed() == true ? 0xB2 : 0xB1;
+                    midiOutputDevice.sendMidiControlChange(0, redNum, 0x69, currentNote.getNote());
+                }
+            }
+        },1,4, TimeUnit.SECONDS);
+    }
+
+    public void stopLight(){
+        //onNotes.clear();
+        currentNote = null;
+        pool.shutdown();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
