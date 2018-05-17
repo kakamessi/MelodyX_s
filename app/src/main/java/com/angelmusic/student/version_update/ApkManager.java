@@ -100,7 +100,7 @@ public class ApkManager {
         //截取URL后半部分作为文件名
         final String apkName = apkVersionInfo.getDetail().getUrl().substring(apkVersionInfo.getDetail().getUrl().lastIndexOf("/") + 1);
         //拼接apk的下载地址
-        final String apkUrl = mContext.getResources().getString(R.string.domain_name_download) + apkVersionInfo.getDetail().getUrl();//apk的下载地址
+        final String apkUrl = mContext.getResources().getString(R.string.apk_download) + apkVersionInfo.getDetail().getUrl();//apk的下载地址
         //下载的apk的存储路径
         final String apkPath = SDCardUtil.getAppFilePath(mContext) + APK_PATH + File.separator;
         //弹框
