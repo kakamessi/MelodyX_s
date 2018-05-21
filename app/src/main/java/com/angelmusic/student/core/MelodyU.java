@@ -1184,7 +1184,7 @@ public class MelodyU {
     //-----蔚科 亮灯协议----------------------------------------------------------------------------------
     private HashMap onNotes = new HashMap();
     private NoteInfo currentNote;
-    private ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService pool;
 
     /**
      *
@@ -1204,45 +1204,58 @@ public class MelodyU {
         p2 = isOn==true?0x69:0x68;
 
         if(isOn){
-//            NoteInfo ni = new NoteInfo();
-//            ni.setIdNoteRed(isRed);
-//            ni.setNote(p3);
-//            onNotes.put(p3,ni);
-            currentNote = new NoteInfo();
-            currentNote.setIdNoteRed(isRed);
-            currentNote.setNote(p3);
+            NoteInfo ni = new NoteInfo();
+            ni.setIdNoteRed(isRed);
+            ni.setNote(p3);
+            onNotes.put(p3,ni);
+//            currentNote = new NoteInfo();
+//            currentNote.setIdNoteRed(isRed);
+//            currentNote.setNote(p3);
 
 
         }else{
-            //onNotes.remove(p3);
+            onNotes.remove(p3);
         }
 
         midiOutputDevice.sendMidiControlChange(0,p1,p2,p3);
     }
 
     public void startLight(final MidiOutputDevice midiOutputDevice){
-        pool.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-//                Iterator iter = onNotes.entrySet().iterator();
-//                while (iter.hasNext()) {
-//                    Map.Entry entry = (Map.Entry) iter.next();
-//                    NoteInfo val = (NoteInfo) entry.getValue();
-//                    int c1 = val.isIdNoteRed() ==true?0xB2:0xB1;
-//                    midiOutputDevice.sendMidiControlChange(0,c1,0x69,val.getNote());
+
+//        try {
+            pool = Executors.newScheduledThreadPool(1);
+            pool.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    Iterator iter = onNotes.entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Map.Entry entry = (Map.Entry) iter.next();
+                        NoteInfo val = (NoteInfo) entry.getValue();
+                        int redNum = val.isIdNoteRed() ==true?0xB2:0xB1;
+                        if(midiOutputDevice==null){
+                            return;
+                        }
+                        midiOutputDevice.sendMidiControlChange(0,redNum,0x69,val.getNote());
+                    }
+//                if(currentNote!=null) {
+//                    int redNum = currentNote.isIdNoteRed() == true ? 0xB2 : 0xB1;
+//                    midiOutputDevice.sendMidiControlChange(0, redNum, 0x69, currentNote.getNote());
 //                }
-                if(currentNote!=null) {
-                    int redNum = currentNote.isIdNoteRed() == true ? 0xB2 : 0xB1;
-                    midiOutputDevice.sendMidiControlChange(0, redNum, 0x69, currentNote.getNote());
                 }
-            }
-        },1,4, TimeUnit.SECONDS);
+            },0,4, TimeUnit.SECONDS);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     public void stopLight(){
-        //onNotes.clear();
-        currentNote = null;
-        pool.shutdown();
+//        if(null!=pool) {
+            onNotes.clear();
+            //currentNote = null;
+            pool.shutdown();
+            pool = null;
+//        }
     }
 
 
