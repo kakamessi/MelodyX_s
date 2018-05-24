@@ -36,7 +36,7 @@ import static com.angelmusic.student.activity.VideoActivity.TYPE_PLAY;
 public class H5QukuActivity extends BaseMidiActivity {
 
     //   10.0.0.8:1236/    http://s.huangzhongdalv.com
-    public static final String URL_ROOT = "http://10.0.0.8:1236/";
+    public static final String URL_ROOT = "http://s.huangzhongdalv.com";
 
     @BindView(R.id.webView1)
     WebView mWebview;
