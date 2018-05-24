@@ -27,6 +27,14 @@ import static com.angelmusic.student.R.id.circleProgress;
 /**
  * Created by fei on 2017/1/11.
  * 注意:传入的courseDataList的第一条数据需要设置为null,用于显示全部下载的item
+ *
+ *
+ *
+ *  1，准备下载
+ *  2，下载
+ *  3，暂停
+ *  4，下载完成
+ *
  */
 
 public class DownloadNewAdapter extends BaseAdapter {
@@ -85,6 +93,12 @@ public class DownloadNewAdapter extends BaseAdapter {
         }
 
         holder.tvCourseName.setText(ci.getCourse_name());
+
+        //解决进度过150%的bug， 可能是由于下载重复文件导致的
+        if(ci.getDone_num()> ci.getAll_num()){
+            ci.setDone_num(ci.getAll_num());
+        }
+
         holder.tvProgress.setText((int)((ci.getDone_num()/ci.getAll_num())*100) + "%");
         holder.circleProgress.setProgress((int)((ci.getDone_num()/ci.getAll_num())*100));
 
