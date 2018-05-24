@@ -128,7 +128,7 @@ public class H5QukuActivity extends BaseMidiActivity {
         }
         super.onDestroy();
 
-        MelodyU.getInstance().stopBeatThread(null);
+        //MelodyU.getInstance().stopBeatThread(null);
     }
 
     public class PianoAction extends Object {
@@ -192,7 +192,7 @@ public class H5QukuActivity extends BaseMidiActivity {
         Toast.makeText(this, "钢琴已连接", 0).show();
         mOutputDevice = getMidiOutputDevice();
 
-        MelodyU.getInstance().startBeatThread(mOutputDevice);
+        //MelodyU.getInstance().startBeatThread(mOutputDevice);
     }
 
     //note 21 -108 序号
