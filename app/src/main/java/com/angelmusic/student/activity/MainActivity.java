@@ -148,7 +148,7 @@ public class MainActivity extends BaseMidiActivity {
                 break;
             case R.id.iv_quku:
                 //addFragment();
-                startActivity(new Intent(MainActivity.this, H5QukuActivity.class));
+                startActivity(new Intent(MainActivity.this, ImageListActivity.class));
 
                 break;
             default:
