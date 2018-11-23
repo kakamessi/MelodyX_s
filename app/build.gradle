@@ -14,11 +14,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        multiDexEnabled true
-//        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
-//        ndk {
-//            abiFilters "armeabi", "armeabi-v7a"
-//        }
+        multiDexEnabled true
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
     }
     buildTypes {
         //发布版
