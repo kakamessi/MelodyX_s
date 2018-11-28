@@ -41,21 +41,25 @@ import static com.angelmusic.student.R.id.rl_video;
 import static com.angelmusic.student.base.App.init;
 import static com.angelmusic.student.core.MelodyU.d_color_1;
 import static com.angelmusic.student.core.MelodyU.d_color_2;
+import static com.angelmusic.student.core.MelodyU.d_color_27;
 import static com.angelmusic.student.core.MelodyU.d_color_3;
 import static com.angelmusic.student.core.MelodyU.d_color_4;
 import static com.angelmusic.student.core.MelodyU.d_color_5;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_1;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_2;
+import static com.angelmusic.student.core.MelodyU.d_duringtime_27;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_3;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_4;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_5;
 import static com.angelmusic.student.core.MelodyU.d_note_1;
 import static com.angelmusic.student.core.MelodyU.d_note_2;
+import static com.angelmusic.student.core.MelodyU.d_note_27;
 import static com.angelmusic.student.core.MelodyU.d_note_3;
 import static com.angelmusic.student.core.MelodyU.d_note_4;
 import static com.angelmusic.student.core.MelodyU.d_note_5;
 import static com.angelmusic.student.core.MelodyU.d_starttime_1;
 import static com.angelmusic.student.core.MelodyU.d_starttime_2;
+import static com.angelmusic.student.core.MelodyU.d_starttime_27;
 import static com.angelmusic.student.core.MelodyU.d_starttime_3;
 import static com.angelmusic.student.core.MelodyU.d_starttime_4;
 import static com.angelmusic.student.core.MelodyU.d_starttime_5;
@@ -638,6 +642,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         } else if ("第八课".equals(ab.getStringByPositon(6))) {
             //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
+        }else if("第二十七课".equals(ab.getStringByPositon(6))){
+            tt = new TempleThread(mOutputDevice, d_starttime_27, d_duringtime_27, d_color_27, d_note_27);
         }
 
         if (tt != null) {
