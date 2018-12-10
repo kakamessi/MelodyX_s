@@ -64,8 +64,6 @@ public class BaseH5Activity extends BaseMidiActivity {
     }
 
     public void loadH5(final String vName){
-        //mWebview.loadUrl(URL_ROOT + "questionForStudent.html");
-        mWebview.loadUrl(URL_ROOT);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -77,7 +75,7 @@ public class BaseH5Activity extends BaseMidiActivity {
     public void initH5() {
 
         mWebview = (WebView) findViewById(R.id.webView);
-
+        mWebview.loadUrl(URL_ROOT);
         mWebSettings = mWebview.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
