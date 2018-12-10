@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -7,6 +11,16 @@ android {
 //        checkReleaseBuilds false
 //        abortOnError false
 //    }
+
+    signingConfigs {
+        release {
+            keyAlias 'hzdl'
+            keyPassword 'hzdl1102'
+            storeFile file('hzdl.jks')
+            storePassword 'hzdl1102'
+        }
+    }
+
     defaultConfig {
         applicationId "com.hzdl.student"
         minSdkVersion 18
@@ -25,8 +39,19 @@ android {
         release {
             //允许混淆
             minifyEnabled false
+            signingConfig signingConfigs.release
             //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace("app-", "student${defaultConfig.versionName}_${releaseTime()}_")
+                output.outputFileName = fileName
+            }
         }
     }
 }
