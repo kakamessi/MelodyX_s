@@ -7,6 +7,10 @@ def releaseTime() {
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 //    lintOptions {
 //        checkReleaseBuilds false
 //        abortOnError false
@@ -23,8 +27,8 @@ android {
 
     defaultConfig {
         applicationId "com.hzdl.student"
-        minSdkVersion 18
-        targetSdkVersion 21
+        minSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -72,10 +76,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
-
     compile 'com.charonchui.vitamio:vitamio:4.2.2'
     compile 'com.jude:rollviewpager:1.2.9'
     compile 'com.github.chrisbanes.photoview:library:+'
-
-
+    implementation project(':jiaozivideoplayer')
+    compile 'com.lovedise:permissiongen:0.0.6'
 }

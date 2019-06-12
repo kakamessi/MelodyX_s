@@ -1,6 +1,5 @@
 package com.angelmusic.student.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,53 +15,43 @@ import android.widget.Toast;
 
 import com.angelmusic.stu.utils.Log;
 import com.angelmusic.student.R;
-import com.angelmusic.student.base.BaseMidiActivity;
 import com.angelmusic.student.core.ActionBean;
 import com.angelmusic.student.core.ActionProtocol;
 import com.angelmusic.student.core.ActionResolver;
 import com.angelmusic.student.core.MelodyU;
 import com.angelmusic.student.core.NoteInfo;
-import com.angelmusic.student.utils.FileUtil;
+import com.angelmusic.student.customview.JZVideo;
 import com.angelmusic.student.utils.Utils;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.Vitamio;
-import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
 import jp.kshoji.driver.midi.device.MidiOutputDevice;
 
-import static android.R.attr.name;
 import static com.angelmusic.student.R.id.rl_video;
-import static com.angelmusic.student.base.App.init;
 import static com.angelmusic.student.core.MelodyU.d_color_1;
 import static com.angelmusic.student.core.MelodyU.d_color_2;
 import static com.angelmusic.student.core.MelodyU.d_color_27;
 import static com.angelmusic.student.core.MelodyU.d_color_3;
 import static com.angelmusic.student.core.MelodyU.d_color_4;
-import static com.angelmusic.student.core.MelodyU.d_color_5;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_1;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_2;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_27;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_3;
 import static com.angelmusic.student.core.MelodyU.d_duringtime_4;
-import static com.angelmusic.student.core.MelodyU.d_duringtime_5;
 import static com.angelmusic.student.core.MelodyU.d_note_1;
 import static com.angelmusic.student.core.MelodyU.d_note_2;
 import static com.angelmusic.student.core.MelodyU.d_note_27;
 import static com.angelmusic.student.core.MelodyU.d_note_3;
 import static com.angelmusic.student.core.MelodyU.d_note_4;
-import static com.angelmusic.student.core.MelodyU.d_note_5;
 import static com.angelmusic.student.core.MelodyU.d_starttime_1;
 import static com.angelmusic.student.core.MelodyU.d_starttime_2;
 import static com.angelmusic.student.core.MelodyU.d_starttime_27;
 import static com.angelmusic.student.core.MelodyU.d_starttime_3;
 import static com.angelmusic.student.core.MelodyU.d_starttime_4;
-import static com.angelmusic.student.core.MelodyU.d_starttime_5;
 
 /**
  * 1- 钢琴发音
@@ -72,8 +61,6 @@ import static com.angelmusic.student.core.MelodyU.d_starttime_5;
 public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
 
-    @BindView(R.id.vv)
-    VideoView vv;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
     @BindView(R.id.rl_loading)
@@ -86,6 +73,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     RelativeLayout rlScore;
     @BindView(R.id.rl_teacher_screen)
     ImageView rlTeacherScreen;
+    @BindView(R.id.jzvideo)
+    JZVideo mJzvideo;
 
 
     private MidiOutputDevice mOutputDevice;
@@ -110,13 +99,13 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         setUIType(R.id.rl_loading);
 
 
-//        doInnerAction();
-//        rlScore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                doInnerAction();
-//            }
-//        });
+        //        doInnerAction();
+        //        rlScore.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View view) {
+        //                doInnerAction();
+        //            }
+        //        });
     }
 
     @Override
@@ -127,7 +116,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        vv.stopPlayback();
+        mJzvideo.release();
         stopTempleLight();
 
         new Thread(new Runnable() {
@@ -148,16 +137,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
      * 视频插件初始化
      */
     private void initVV() {
-        Vitamio.initialize(this);
-        MediaController mc = new MediaController(this);
-        mc.setVisibility(View.INVISIBLE);
-        vv.setMediaController(mc);
-        vv.setOnPreparedListener(this);
-        vv.setOnErrorListener(this);
-        vv.setOnCompletionListener(this);
 
-        //vv.setVideoURI(Uri.parse("http://112.253.22.157/17/z/z/y/u/zzyuasjwufnqerzvyxgkuigrkcatxr/hc.yinyuetai.com/D046015255134077DDB3ACA0D7E68D45.flv"));
-        //vv.setVideoURI(Uri.parse(Utils.getVideoPath() + "hehe.mp4"));
     }
 
     @OnClick({rl_video, R.id.activity_course})
@@ -196,34 +176,31 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
      * 切换资源
      */
     private void swichPlayScr(String name) {
-        vv.setVideoURI(Uri.parse(Utils.getVideoPath() + name));
-        vv.start();
+        mJzvideo.setUp(Utils.getVideoPath() + name,name, Jzvd.SCREEN_WINDOW_NORMAL);
+        mJzvideo.startPlaying();
     }
 
     /**
      * 播放/暂停
      */
     private void playOrPause() {
-        if (vv != null)
-            if (vv.isPlaying()) {
-                vv.pause();
-            } else {
-                vv.start();
-            }
+        if (mJzvideo != null){
+            mJzvideo.pause();
+        }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
 
-//        try {
-//            if(ab.getCodeByPositon(7)==1){
-//                //进入h5
-//                setUIType(R.id.webView);
-//                loadH5(ab.getStringByPositon(3));
-//            }
-//        }catch (Exception e){
-//
-//        }
+        //        try {
+        //            if(ab.getCodeByPositon(7)==1){
+        //                //进入h5
+        //                setUIType(R.id.webView);
+        //                loadH5(ab.getStringByPositon(3));
+        //            }
+        //        }catch (Exception e){
+        //
+        //        }
 
     }
 
@@ -268,7 +245,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         Log.e("kaka", "----------action code------- " + str);
         ab = ActionResolver.getInstance().resolve(str);
 
-        if(ab.getCodeByPositon(0) == 1) {
+        if (ab.getCodeByPositon(0) == 1) {
 
             if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_COURSE) {
                 if (ab.getCodeByPositon(2) == 0) {
@@ -279,13 +256,13 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
             } else if (ab.getCodeByPositon(1) == ActionProtocol.CODE_ACTION_SCORE) {
 
-//            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
-//                ab.setStringByPositon(2,MelodyU.PIC_NAME_30);
-//            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
-//                ab.setStringByPositon(2,MelodyU.PIC_NAME_31);
-//            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
-//                ab.setStringByPositon(2,MelodyU.PIC_NAME_32);
-//            }
+                //            if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)){
+                //                ab.setStringByPositon(2,MelodyU.PIC_NAME_30);
+                //            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)){
+                //                ab.setStringByPositon(2,MelodyU.PIC_NAME_31);
+                //            }else if(ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)){
+                //                ab.setStringByPositon(2,MelodyU.PIC_NAME_32);
+                //            }
 
                 resetVideo();
                 initPlaySection();
@@ -294,7 +271,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                 resetVideo();
                 initImgSection();
 
-            }else if (ab.getCodeByPositon(1) == 5) {
+            } else if (ab.getCodeByPositon(1) == 5) {
                 //图片界面
                 resetVideo();
                 initAnswerSection();
@@ -306,7 +283,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
 
     private void initAnswerSection() {
         COURSE_TYPE = TYPE_ANSWER;
-        setUIType(R.id.webView);    
+        setUIType(R.id.webView);
         loadH5(ab.getStringByPositon(2));
     }
 
@@ -378,81 +355,81 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     //初始化音符
     private void initNoteAndLight() {
         NoteInfo nextInfo = null;
-//
-//        if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)) {
-//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)) {
-//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//
-//        // 9 - 16 课  1 1 0   111   111
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_1)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_2)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_10)) {
-//            nextInfo = new NoteInfo(38, 1, MelodyU.getKeyIndex(38), false);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_11)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_12)) {
-//            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_13)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_14)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_15)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_16)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//
-//        }
-//        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_19)) {
-//            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
-//            NoteInfo nii = new NoteInfo(27, 1, MelodyU.getKeyIndex(27), true);
-//            nextInfo.setInfo(nii);
-//
-//        }
+        //
+        //        if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_1)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_2)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_3)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_4)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_5)) {
+        //            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_6)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_7)) {
+        //            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_8)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        } else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_D1)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //
+        //        // 9 - 16 课  1 1 0   111   111
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_1)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_9_2)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_10)) {
+        //            nextInfo = new NoteInfo(38, 1, MelodyU.getKeyIndex(38), false);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_11)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_12)) {
+        //            nextInfo = new NoteInfo(46, 1, MelodyU.getKeyIndex(46), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_13)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_14)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_15)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_16)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //
+        //        }
+        //        else if (ab.getStringByPositon(2).equals(MelodyU.PIC_NAME_19)) {
+        //            nextInfo = new NoteInfo(39, 1, MelodyU.getKeyIndex(39), true);
+        //            NoteInfo nii = new NoteInfo(27, 1, MelodyU.getKeyIndex(27), true);
+        //            nextInfo.setInfo(nii);
+        //
+        //        }
 
-        nextInfo = MelodyU.getInfoByIndex(currentPlayIndex,ab.getStringByPositon(2));
+        nextInfo = MelodyU.getInfoByIndex(currentPlayIndex, ab.getStringByPositon(2));
 
         MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
         //亮灯显示
@@ -482,7 +459,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     /******
      * 显示指定图谱
      ******/
-    private void showTopLayout(String tag,String name) {
+    private void showTopLayout(String tag, String name) {
         //遍历viewgroup
         LinearLayout vg = null;
         int[] ls = MelodyU.getInstance().getPlayLayouts(name);
@@ -519,7 +496,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
      ******/
     private void checkInput(int note) {
 
-        if(ab==null){
+        if (ab == null) {
             return;
         }
 
@@ -529,44 +506,44 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         /****** 输入判断 ******/
         if (MelodyU.checkInputXX(note, currentPlayIndex, ab.getStringByPositon(2))) {
 
-            currentInfo = MelodyU.getInfoByIndex(currentPlayIndex,ab.getStringByPositon(2));
-            nextInfo = MelodyU.getInfoByIndex(currentPlayIndex+1,ab.getStringByPositon(2));
+            currentInfo = MelodyU.getInfoByIndex(currentPlayIndex, ab.getStringByPositon(2));
+            nextInfo = MelodyU.getInfoByIndex(currentPlayIndex + 1, ab.getStringByPositon(2));
 
             //标识已经使用状态
             currentInfo.setUsedStatu(note);
 
             //当前环节没有结束，熄灭一个灯    双手弹奏
-            if(!currentInfo.isFinish()){
-                offLight(currentInfo.getNoteByid(note),false);
+            if (!currentInfo.isFinish()) {
+                offLight(currentInfo.getNoteByid(note), false);
 
-            }else{
+            } else {
 
                 //下一个
-                offLight(currentInfo,true);
+                offLight(currentInfo, true);
                 doLight(nextInfo);
                 preInfo = nextInfo;
 
                 /****** 处理多页面 加载正确的页面 TAG搜索******/
-                if(currentPlayIndex + 2 > MelodyU.searchNotes(ab.getStringByPositon(2)).size()){
+                if (currentPlayIndex + 2 > MelodyU.searchNotes(ab.getStringByPositon(2)).size()) {
                     showTopLayout("2");
-                }else{
+                } else {
                     showTopLayout((currentPlayIndex + 2) + "");
                 }
 
                 //下一个音符的UI显示
-                if(nextInfo.getInfo()==null){
+                if (nextInfo.getInfo() == null) {
                     MelodyU.getInstance().setNoteAndKey(this, rlScore, nextInfo.getNoteIndex(), nextInfo.isIdNoteRed(), nextInfo.getKeyIndex(), nextInfo.isIdNoteRed());
-                }else{
+                } else {
                     MelodyU.getInstance().setNoteAndKey1(this, rlScore, nextInfo);
                 }
 
             }
 
             //状态重置
-            if(currentInfo.isFinish()){
+            if (currentInfo.isFinish()) {
                 if (currentPlayIndex == (MelodyU.searchNotes(ab.getStringByPositon(2)).size() - 1)) {
                     currentPlayIndex = 0;
-                }else{
+                } else {
                     currentPlayIndex++;
                 }
                 currentInfo.reSet();
@@ -584,7 +561,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         }
         MelodyU.getInstance().offAllLight(mOutputDevice);
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getNote() + 21, nextInfo.isIdNoteRed(), true));
-        if(nextInfo.getInfo()!=null){
+        if (nextInfo.getInfo() != null) {
             mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(nextInfo.getInfo().getNote() + 21, nextInfo.getInfo().isIdNoteRed(), true));
         }
     }
@@ -596,7 +573,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
         //mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, info.isIdNoteRed(), false));
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, true, false));
         mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getNote() + 21, false, false));
-        if(isCheckSon && info.getInfo()!=null){
+        if (isCheckSon && info.getInfo() != null) {
             //mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, info.getInfo().isIdNoteRed(), false));
             mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, true, false));
             mOutputDevice.sendMidiSystemExclusive(0, MelodyU.getlightCode(info.getInfo().getNote() + 21, false, false));
@@ -606,14 +583,14 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     private void resetLight() {
         MelodyU.getInstance().offAllLight(mOutputDevice);
         stopTempleLight();
-        offLight(preInfo,true);
+        offLight(preInfo, true);
         //这里暂停 会出现异常情况
         //vv.stopPlayback();
     }
 
     private void resetVideo() {
-        if (vv != null) {
-            vv.stopPlayback();
+        if (mJzvideo != null) {
+            JzvdStd.releaseAllVideos();
         }
     }
 
@@ -642,7 +619,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
             //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
         } else if ("第八课".equals(ab.getStringByPositon(6))) {
             //tt = new TempleThread(mOutputDevice, d_starttime_4, d_duringtime_4, d_color_4, d_note_4);
-        }else if("第二十七课".equals(ab.getStringByPositon(6))){
+        } else if ("第二十七课".equals(ab.getStringByPositon(6))) {
             tt = new TempleThread(mOutputDevice, d_starttime_27, d_duringtime_27, d_color_27, d_note_27);
         }
 
@@ -714,8 +691,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
                         }
                         return;
                     }
-                    if (vv != null) {
-                        int curTime = (int) vv.getCurrentPosition();
+                    if (mJzvideo != null) {
+                        int curTime = (int) mJzvideo.getCurrentPositionWhenPlaying();
                         if (curTime > delay[xunhuan]) {
                             MelodyU.getInstance().lightTempo(md, dur, color, index);
                             xunhuan++;
@@ -733,7 +710,8 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     //----------测试方法-----------------
 
     int i = 0;
-    void doInnerAction(){
+
+    void doInnerAction() {
         //String name = MelodyU.PICS[(i++)%MelodyU.PICS.length];
         String name = MelodyU.PIC_NAME_22;
         String ac = "1|3|" + name;

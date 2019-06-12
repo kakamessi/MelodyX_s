@@ -1,5 +1,6 @@
 package com.angelmusic.student.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.OnClick;
 import jp.kshoji.driver.midi.device.MidiInputDevice;
+import kr.co.namee.permissiongen.PermissionGen;
 
 /**
  * 主页
@@ -83,12 +85,23 @@ public class MainActivity extends BaseMidiActivity {
         initData();
         initView();
         initMidi();
-
+        checkP();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    private void checkP() {
+        PermissionGen.with(MainActivity.this)
+                .addRequestCode(0)
+                .permissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                .request();
 
     }
 
