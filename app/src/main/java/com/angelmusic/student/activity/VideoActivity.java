@@ -116,7 +116,7 @@ public class VideoActivity extends BaseH5Activity implements MediaPlayer.OnPrepa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        JzvdStd.releaseAllVideos();
+        JZVideo.releaseAllVideos();
         stopTempleLight();
 
         new Thread(new Runnable() {
