@@ -1,6 +1,6 @@
 <resources>
     <!--APP名称-->
-    <string name="app_name">"天赋"</string>
+    <string name="app_name">"智慧钢琴课堂学生端"</string>
     <!--请求信息时的域名信息-->
     <string name="domain_name_request">http://47.104.96.204:8080</string>
     <!--apk下载接口-->
